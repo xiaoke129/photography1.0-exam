@@ -1,0 +1,1498 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄影专业考试训练系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff6700', // 小米橙色
+                        secondary: '#333333',
+                        light: '#f5f5f5',
+                        dark: '#1a1a1a',
+                        'neutral-bg': '#f9f9f9',
+                        'card-bg': '#ffffff',
+                        'border-color': '#e0e0e0',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 2px 8px rgba(0, 0, 0, 0.08)',
+                        'hover': '0 4px 16px rgba(0, 0, 0, 0.12)',
+                    }
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+            .transition-standard {
+                transition: all 0.3s ease;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-system-bg text-secondary min-h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-camera-retro text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-dark">摄影专业考试训练系统</h1>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-primary font-medium" id="nav-home">首页</a>
+                <a href="#" class="hover:text-primary transition-standard" id="nav-about">关于系统</a>
+                <a href="#" class="hover:text-primary transition-standard" id="nav-history">考试记录</a>
+                <a href="#" class="hover:text-primary transition-standard" id="nav-help">帮助中心</a>
+            </nav>
+            <button class="md:hidden text-secondary text-xl" id="mobile-menu-button">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-white border-t border-border-color" id="mobile-menu">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#" class="py-2 text-primary font-medium" id="mobile-nav-home">首页</a>
+                <a href="#" class="py-2 hover:text-primary transition-standard" id="mobile-nav-about">关于系统</a>
+                <a href="#" class="py-2 hover:text-primary transition-standard" id="mobile-nav-history">考试记录</a>
+                <a href="#" class="py-2 hover:text-primary transition-standard" id="mobile-nav-help">帮助中心</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- 首页 -->
+        <section id="home-section" class="space-y-8">
+            <!-- 欢迎区域 -->
+            <div class="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 md:p-8 shadow-card">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">欢迎使用摄影专业考试训练系统</h2>
+                <p class="text-lg text-secondary/80 max-w-3xl mb-6">
+                    本系统包含306道摄影专业题目，支持模拟考试和专项训练功能，帮助您高效备考，提升摄影专业知识水平。
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button id="start-exam-btn" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-standard flex items-center">
+                        <i class="fa fa-play-circle mr-2"></i> 开始模拟考试
+                    </button>
+                    <button id="start-training-btn" class="bg-white border border-primary text-primary hover:bg-primary/5 px-6 py-3 rounded-lg font-medium transition-standard flex items-center">
+                        <i class="fa fa-graduation-cap mr-2"></i> 进入专项训练
+                    </button>
+                </div>
+            </div>
+
+            <!-- 系统特点 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-card-bg rounded-xl p-6 shadow-card hover:shadow-hover transition-standard">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-random text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">随机组卷</h3>
+                    <p class="text-secondary/70">
+                        每次考试随机生成20道判断题、60道单选题和20道多选题，全面检验您的知识掌握程度。
+                    </p>
+                </div>
+                <div class="bg-card-bg rounded-xl p-6 shadow-card hover:shadow-hover transition-standard">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-line-chart text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">成绩分析</h3>
+                    <p class="text-secondary/70">自动批改并生成详细成绩报告，分析错题类型和知识点分布，帮助您针对性提高。</p>
+                </div>
+                <div class="bg-card-bg rounded-xl p-6 shadow-card hover:shadow-hover transition-standard">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-book text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">详细解析</h3>
+                    <p class="text-secondary/70">
+                        每道题目都配有专业解析，帮助您理解知识点，掌握摄影专业理论和实践技巧。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 数据统计 -->
+            <div class="bg-card-bg rounded-xl p-6 shadow-card">
+                <h3 class="text-xl font-semibold mb-4">题库数据</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="border border-border-color rounded-lg p-4 text-center">
+                        <div class="text-4xl font-bold text-primary mb-2">306</div>
+                        <div class="text-secondary/70">总题数</div>
+                    </div>
+                    <div class="border border-border-color rounded-lg p-4 text-center">
+                        <div class="text-4xl font-bold text-primary mb-2">100</div>
+                        <div class="text-secondary/70">判断题</div>
+                    </div>
+                    <div class="border border-border-color rounded-lg p-4 text-center">
+                        <div class="text-4xl font-bold text-primary mb-2">206</div>
+                        <div class="text-secondary/70">选择题（单选+多选）</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 考试页面 -->
+        <section id="exam-section" class="hidden space-y-6">
+            <!-- 考试头部信息 -->
+            <div class="bg-card-bg rounded-xl p-4 shadow-card flex flex-wrap justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold">摄影专业模拟考试</h2>
+                    <p class="text-secondary/70">总分100分 · 共100题 · 每题1分</p>
+                </div>
+                <div class="flex items-center space-x-4 mt-4 sm:mt-0">
+                    <div class="flex items-center">
+                        <i class="fa fa-clock-o text-primary mr-2"></i>
+                        <span id="exam-timer" class="font-medium">60:00</span>
+                    </div>
+                    <button id="submit-exam-btn" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-standard">
+                        交卷
+                    </button>
+                </div>
+            </div>
+
+            <!-- 题目导航 -->
+            <div class="bg-card-bg rounded-xl p-4 shadow-card">
+                <h3 class="font-semibold mb-3">题目导航</h3>
+                <div class="flex flex-wrap gap-2 max-h-24 overflow-y-auto scrollbar-hide">
+                    <div id="question-navigation" class="w-full">
+                        <!-- 题目导航将通过JS动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 题目区域 -->
+            <div class="bg-card-bg rounded-xl p-6 shadow-card min-h-[500px]">
+                <div id="question-container" class="space-y-6">
+                    <!-- 题目将通过JS动态生成 -->
+                    <div class="flex items-center justify-center h-64">
+                        <div class="text-center">
+                            <i class="fa fa-spinner fa-spin text-primary text-3xl mb-4"></i>
+                            <p class="text-secondary/70">正在加载题目...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分页按钮 -->
+            <div class="flex justify-between">
+                <button id="prev-question-btn" class="bg-white border border-border-color hover:border-primary text-secondary hover:text-primary px-4 py-2 rounded-lg font-medium transition-standard disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+                    <i class="fa fa-chevron-left mr-1"></i> 上一题
+                </button>
+                <button id="next-question-btn" class="bg-white border border-border-color hover:border-primary text-secondary hover:text-primary px-4 py-2 rounded-lg font-medium transition-standard">
+                    下一题 <i class="fa fa-chevron-right ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 成绩页面 -->
+        <section id="result-section" class="hidden space-y-6">
+            <div class="bg-card-bg rounded-xl p-6 shadow-card text-center">
+                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-4">
+                    <span id="total-score" class="text-4xl font-bold text-primary">0</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">考试成绩</h2>
+                <p class="text-secondary/70 mb-6">总分100分 · 您获得了 <span id="score-text" class="font-semibold text-primary">0</span> 分</p>
+                <div id="result-status" class="inline-block px-4 py-1 rounded-full text-sm font-medium mb-6"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+                    <div class="border border-border-color rounded-lg p-3">
+                        <div class="text-sm text-secondary/70 mb-1">判断题（20分）</div>
+                        <div class="text-xl font-semibold" id="judge-score">0分</div>
+                    </div>
+                    <div class="border border-border-color rounded-lg p-3">
+                        <div class="text-sm text-secondary/70 mb-1">单选题（60分）</div>
+                        <div class="text-xl font-semibold" id="single-score">0分</div>
+                    </div>
+                    <div class="border border-border-color rounded-lg p-3">
+                        <div class="text-sm text-secondary/70 mb-1">多选题（20分）</div>
+                        <div class="text-xl font-semibold" id="multi-score">0分</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 错题解析 -->
+            <div class="bg-card-bg rounded-xl p-6 shadow-card">
+                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fa fa-book text-primary mr-2"></i> 错题解析
+                </h3>
+                <div id="wrong-questions-container" class="space-y-6">
+                    <!-- 错题解析将通过JS动态生成 -->
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="flex justify-center space-x-4">
+                <button id="review-all-btn" class="bg-white border border-primary text-primary hover:bg-primary/5 px-6 py-3 rounded-lg font-medium transition-standard">
+                    查看所有题目
+                </button>
+                <button id="restart-exam-btn" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-standard">
+                    重新考试
+                </button>
+            </div>
+        </section>
+
+        <!-- 关于系统页面 -->
+        <section id="about-section" class="hidden space-y-6">
+            <div class="bg-card-bg rounded-xl p-6 shadow-card">
+                <h2 class="text-2xl font-bold mb-4">关于摄影专业考试训练系统</h2>
+                <div class="space-y-4 text-secondary/80">
+                    <p>
+                        本系统是一款专为摄影专业学习者设计的考试训练平台，旨在帮助用户巩固摄影理论知识，提升专业技能水平。
+                    </p>
+                    <p>
+                        系统包含306道精选摄影专业题目，涵盖摄影技术、用光、构图、后期处理等多个方面，全面覆盖摄影专业核心知识点。
+                    </p>
+                    <h3 class="text-xl font-semibold mt-6 mb-3">系统功能</h3>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>模拟考试：随机生成100道题目（20道判断题、60道单选题、20道多选题），模拟真实考试环境</li>
+                        <li>计时功能：考试过程中实时计时，帮助用户掌握答题节奏</li>
+                        <li>自动批改：提交试卷后立即生成成绩，无需等待</li>
+                        <li>错题解析：针对答错的题目提供详细解析，帮助用户理解知识点</li>
+                        <li>成绩分析：按题型统计得分情况，清晰了解自己的优势与不足</li>
+                    </ul>
+                    <h3 class="text-xl font-semibold mt-6 mb-3">使用说明</h3>
+                    <ol class="list-decimal pl-6 space-y-2">
+                        <li>点击首页"开始模拟考试"按钮进入考试</li>
+                        <li>考试过程中可通过题目导航快速跳转到任意题目</li>
+                        <li>完成所有题目后点击"交卷"按钮查看成绩</li>
+                        <li>在成绩页面可查看错题解析或重新开始考试</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- 考试记录页面 -->
+        <section id="history-section" class="hidden space-y-6">
+            <div class="bg-card-bg rounded-xl p-6 shadow-card">
+                <h2 class="text-2xl font-bold mb-6">考试记录</h2>
+                
+                <div id="history-empty" class="text-center py-12">
+                    <i class="fa fa-history text-4xl text-border-color mb-4"></i>
+                    <p class="text-secondary/70">暂无考试记录</p>
+                    <button id="start-first-exam" class="mt-4 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-standard">
+                        开始第一次考试
+                    </button>
+                </div>
+                
+                <div id="history-list" class="hidden space-y-4">
+                    <!-- 考试记录将通过JS动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 帮助中心页面 -->
+        <section id="help-section" class="hidden space-y-6">
+            <div class="bg-card-bg rounded-xl p-6 shadow-card">
+                <h2 class="text-2xl font-bold mb-6">帮助中心</h2>
+                
+                <div class="space-y-6">
+                    <div class="border-b border-border-color pb-4">
+                        <h3 class="text-xl font-semibold mb-2">如何开始模拟考试？</h3>
+                        <p class="text-secondary/80">
+                            在首页点击"开始模拟考试"按钮即可进入考试界面。系统会自动生成100道题目，包括20道判断题、60道单选题和20道多选题。
+                        </p>
+                    </div>
+                    
+                    <div class="border-b border-border-color pb-4">
+                        <h3 class="text-xl font-semibold mb-2">考试时间有限制吗？</h3>
+                        <p class="text-secondary/80">
+                            是的，模拟考试限时60分钟。考试界面顶部会显示剩余时间，时间结束后系统会自动提交试卷。
+                        </p>
+                    </div>
+                    
+                    <div class="border-b border-border-color pb-4">
+                        <h3 class="text-xl font-semibold mb-2">如何查看错题解析？</h3>
+                        <p class="text-secondary/80">
+                            提交试卷后，系统会自动显示您的成绩和错题解析。您也可以点击"查看所有题目"按钮回顾全部题目及解析。
+                        </p>
+                    </div>
+                    
+                    <div class="border-b border-border-color pb-4">
+                        <h3 class="text-xl font-semibold mb-2">考试记录会保存多久？</h3>
+                        <p class="text-secondary/80">
+                            考试记录保存在浏览器本地存储中，只要不清除浏览器数据，记录就会一直保存。您可以在"考试记录"页面查看历史成绩。
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">遇到问题如何反馈？</h3>
+                        <p class="text-secondary/80">
+                            如果您在使用过程中遇到任何问题或有改进建议，请联系系统管理员：support@photography-exam.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa fa-camera-retro text-primary text-xl"></i>
+                        <h3 class="text-lg font-semibold">摄影专业考试训练系统</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        专注于摄影专业知识的学习与测试，助力您提升摄影技能，掌握专业知识。
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-standard" id="footer-home">首页</a></li>
+                        <li><a href="#" class="hover:text-primary transition-standard" id="footer-about">关于系统</a></li>
+                        <li><a href="#" class="hover:text-primary transition-standard" id="footer-history">考试记录</a></li>
+                        <li><a href="#" class="hover:text-primary transition-standard" id="footer-help">帮助中心</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope text-primary mr-2"></i>
+                            <span>support@photography-exam.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone text-primary mr-2"></i>
+                            <span>400-123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+                © 2023 摄影专业考试训练系统 版权所有
+            </div>
+        </div>
+    </footer>
+
+    <script src="exam-module.js"></script>
+    <script src="practice-module.js"></script>
+    <script>
+        // 初始化模块
+        const examModule = new ExamModule(questionBank);
+        const practiceModule = new PracticeModule(questionBank);
+        let currentMode = null; // 'exam' or 'practice'
+        let currentQuestionIndex = 0;
+
+        // 开始考试
+        document.getElementById('start-exam-btn').addEventListener('click', startExam);
+        // 开始练习
+        document.getElementById('start-training-btn').addEventListener('click', startPractice);
+
+        function startExam() {
+            currentMode = 'exam';
+            const firstQuestion = examModule.startExam();
+            showQuestion(firstQuestion);
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('exam-section').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            startTimer();
+        }
+
+        function startPractice() {
+            currentMode = 'practice';
+            const firstQuestion = practiceModule.startPractice();
+            showQuestion(firstQuestion);
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('exam-section').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+        }
+
+        // 显示题目
+        function showQuestion(question) {
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-4">${question.content}</h3>
+                    <div class="space-y-3">
+                        ${question.options.map((opt, i) => `
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="${question.type === 'multi' ? 'checkbox' : 'radio'}" 
+                                       name="answer" value="${opt.charAt(0)}" 
+                                       class="h-5 w-5 text-primary">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    ${currentMode === 'practice' ? `
+                    <div class="mt-6">
+                        <button id="submit-answer-btn" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-standard">
+                            提交答案
+                        </button>
+                    </div>
+                    ` : ''}
+                </div>
+                ${question.解析 ? `
+                <div id="explanation" class="hidden bg-primary/5 p-4 rounded-lg mt-4">
+                    <h4 class="font-medium text-primary mb-2">解析</h4>
+                    <p>${question.解析}</p>
+                </div>
+                ` : ''}
+            `;
+            
+            if(currentMode === 'practice') {
+                document.getElementById('submit-answer-btn').addEventListener('click', checkAnswer);
+            }
+            updateQuestionNavigation();
+        }
+
+        // 检查答案
+        function checkAnswer() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if(!selected) return;
+            
+            const answer = selected.value;
+            const result = practiceModule.submitAnswer(answer);
+            
+            const explanation = document.getElementById('explanation');
+            if(explanation) {
+                explanation.classList.remove('hidden');
+            }
+            
+            // 显示正确/错误反馈
+            const feedback = document.createElement('div');
+            feedback.className = `mt-4 p-3 rounded-lg ${result.isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+            feedback.textContent = result.isCorrect ? '回答正确！' : '回答错误！';
+            document.getElementById('question-container').appendChild(feedback);
+            
+            // 禁用选项
+            document.querySelectorAll('input[name="answer"]').forEach(input => {
+                input.disabled = true;
+            });
+            
+            // 显示下一题按钮
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'mt-4 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-standard';
+            nextBtn.textContent = '下一题';
+            nextBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                const nextQuestion = practiceModule.goToQuestion(currentQuestionIndex);
+                if(nextQuestion) {
+                    showQuestion(nextQuestion);
+                } else {
+                    // 练习结束
+                    showPracticeResult();
+                }
+            });
+            document.getElementById('question-container').appendChild(nextBtn);
+        }
+        
+        // 显示练习结果
+        function showPracticeResult() {
+            const wrongQuestions = practiceModule.getWrongQuestions();
+            document.getElementById('exam-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            // 显示错题统计
+            document.getElementById('wrong-count').textContent = wrongQuestions.length;
+            
+            // 显示错题列表
+            const wrongContainer = document.getElementById('wrong-questions-container');
+            wrongContainer.innerHTML = wrongQuestions.map(q => `
+                <div class="border-b border-border-color pb-4 mb-4">
+                    <h4 class="font-semibold">${q.content}</h4>
+                    <p class="text-secondary/70 mt-2">正确答案: ${q.answer}</p>
+                    <p class="text-secondary/70">您的答案: ${q.userAnswer}</p>
+                    ${q.解析 ? `<div class="bg-primary/5 p-3 mt-2 rounded">${q.解析}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // 更新题目导航
+        function updateQuestionNavigation() {
+            const nav = document.getElementById('question-navigation');
+            nav.innerHTML = examModule.examQuestions.map((q, i) => `
+                <button class="w-10 h-10 rounded-full flex items-center justify-center 
+                              ${i === currentQuestionIndex ? 'bg-primary text-white' : 'bg-white border border-border-color'}"
+                        onclick="goToQuestion(${i})">
+                    ${i + 1}
+                </button>
+            `).join('');
+        }
+
+        // 计时器功能
+        function startTimer() {
+            const timer = document.getElementById('exam-timer');
+            const interval = setInterval(() => {
+                const remaining = examModule.getRemainingTime();
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    submitExam();
+                }
+                const minutes = Math.floor(remaining / 60);
+                const seconds = Math.floor(remaining % 60);
+                timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }, 1000);
+        }
+
+        // 交卷
+        document.getElementById('submit-exam-btn').addEventListener('click', submitExam);
+        function submitExam() {
+            const result = examModule.submitExam();
+            document.getElementById('exam-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            // 显示成绩
+            document.getElementById('total-score').textContent = result.score;
+            document.getElementById('score-text').textContent = result.score;
+            document.getElementById('result-status').textContent = 
+                result.score >= 60 ? '考试通过' : '考试未通过';
+            document.getElementById('result-status').className = 
+                result.score >= 60 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+            
+            // 显示错题解析
+            const wrongContainer = document.getElementById('wrong-questions-container');
+            wrongContainer.innerHTML = examModule.examQuestions
+                .filter((q, i) => examModule.userAnswers[i] !== q.answer)
+                .map(q => `
+                    <div class="border-b border-border-color pb-4 mb-4">
+                        <h4 class="font-semibold">${q.content}</h4>
+                        <p class="text-secondary/70 mt-2">正确答案: ${q.answer}</p>
+                        <p class="text-secondary/70">您的答案: ${examModule.userAnswers[i] || '未作答'}</p>
+                        ${q.解析 ? `<div class="bg-primary/5 p-3 mt-2 rounded">${q.解析}</div>` : ''}
+                    </div>
+                `).join('');
+        }
+
+        // 题库数据 - 306道题目
+        const questionBank = [
+            // 判断题 (1-100)
+            { id: 1, type: 'judge', content: '改变画面景别的办法不是改变拍摄距离或改变镜头焦距。', answer: '×',解析: '改变画面景别的主要方法就是改变拍摄距离或改变镜头焦距。拍摄距离越近，景别越小；焦距越长，景别越小。' },
+            { id: 2, type: 'judge', content: '照片中从前到后所有的景物全清晰的照片不是大景深照片。', answer: '×',解析: '大景深照片的特点就是画面中从前到后的景物都能保持清晰，小景深则只有部分区域清晰，其余区域模糊。' },
+            { id: 3, type: 'judge', content: '利用小孔成像原理形成的影像是正像。', answer: '×',解析: '小孔成像形成的是倒像，这是由于光沿直线传播，物体上部的光线通过小孔后投射到下部，下部的光线投射到上部。' },
+            { id: 4, type: 'judge', content: '在 Photoshop中坐标原点一旦被改动是不可以被复原的。', answer: '×',解析: '在Photoshop中，坐标原点被改动后可以通过双击标尺的交叉点来复原到默认的左上角位置。' },
+            { id: 5, type: 'judge', content: '在图层选项栏中单击“创建新组”按钮不可以新建一个图层组。', answer: '×',解析: '在图层选项栏中，"创建新组"按钮的主要功能就是新建一个图层组，用于管理多个图层。' },
+            { id: 6, type: 'judge', content: '取景放大倍率小，日视角度小，取景时容易看到全景。', answer: '×',解析: '取景放大倍率小，意味着看到的景物较小，但视角较大，更容易看到全景；放大倍率大则视角小，看到的景物细节更清晰。' },
+            { id: 7, type: 'judge', content: 'JPEG 格式图片中不能保存alpha通道。', answer: '√',解析: 'JPEG格式不支持alpha通道（透明信息），如果需要保存透明信息，应使用PNG或TIFF等格式。' },
+            { id: 8, type: 'judge', content: 'AdobePhotoshop中，使用“图像>调整>去色”命令可以转换色彩模式，将彩色图像变成灰阶图像，并保留原来像素的亮度不变。', answer: '×',解析: '"去色"命令只是将彩色图像变为黑白效果，但不会改变图像的色彩模式（仍为RGB或CMYK等）。要转换为灰阶模式，需使用"图像>模式>灰度"命令。' },
+            { id: 9, type: 'judge', content: '选中“将内部效果混合成组”选项,内投影、内发光、渐变叠加、图案叠加等效果将不起作用。', answer: '×',解析: '选中"将内部效果混合成组"选项不会使这些效果失效，而是将这些内部效果作为一个组进行混合计算，影响它们之间的叠加方式。' },
+            { id: 10, type: 'judge', content: '在拍摄明暗反差较大的景物时，为防止“高光溢出”，可适当增加曝光量，这样可保留高光部位更多的图像信息。', answer: '×',解析: '高光溢出是指高光区域过亮而失去细节，此时应适当减少曝光量，而不是增加，才能保留高光部位的细节。' },
+            { id: 11, type: 'judge', content: '拍摄距离是指被摄体到相机的距离。', answer: '×',解析: '拍摄距离通常指被摄体到相机感光元件（或胶片）的距离，而非到相机机身的距离，因为不同镜头的长度可能不同。' },
+            { id: 12, type: 'judge', content: 'Photoshop中选区的存储载体为蒙版,蒙版存储在通道中以alpha通道形式体现。', answer: '√',解析: '在Photoshop中，选区可以保存为蒙版，这些蒙版以alpha通道的形式存储在通道面板中，方便后续编辑和调用。' },
+            { id: 13, type: 'judge', content: '光圈与景深成正比', answer: '×',解析: '光圈与景深成反比，光圈越小（f值越大），景深越大；光圈越大（f值越小），景深越小。' },
+            { id: 14, type: 'judge', content: 'Photoshop 中像素图的图像分辨率是指单位图像上的像素数量。', answer: '×',解析: '图像分辨率是指单位长度上的像素数量，通常以像素/英寸（ppi）或像素/厘米表示，而非单位图像上的总像素数量。' },
+            { id: 15, type: 'judge', content: '背景光的作用只是照亮背景。', answer: '×',解析: '背景光不仅能照亮背景，还能分离主体与背景，增加画面层次感，有时也能为主体提供一定的边缘光效果。' },
+            { id: 16, type: 'judge', content: '对于16位通道的图像,Photoshop 的所有滤镜不能使用。', answer: '×',解析: '虽然部分Photoshop滤镜不支持16位通道图像，但并非所有滤镜都不能使用，许多常用滤镜是支持16位图像的。' },
+            { id: 17, type: 'judge', content: '光孔缩得越小,通过的光线越少,这时光圈系数F的值越小。', answer: '×',解析: '光孔越小，通过的光线越少，此时光圈系数F的值越大。F值与光孔大小成反比。' },
+            { id: 18, type: 'judge', content: '镜头孔径又称为有效孔径、最大孔径，用系数F的倒数表示，F值越小表示孔径越小。', answer: '×',解析: 'F值越小表示孔径越大，因为F值=焦距/孔径直径，所以在相同焦距下，F值越小，孔径直径越大。' },
+            { id: 19, type: 'judge', content: 'Photoshop的坐标原点内定在左上角，是不可以更改的。', answer: '×',解析: 'Photoshop的坐标原点可以更改，只需用鼠标在标尺的交叉点处拖动即可重新定位原点，双击交叉点可恢复默认位置。' },
+            { id: 20, type: 'judge', content: '"["键与"]"键可以即时控制魔术套索工具轨迹的扩大与收缩。', answer: '√',解析: '在使用魔术套索工具时，"["键可以减小容差（轨迹收缩），"]"键可以增大容差（轨迹扩大），方便即时调整选择范围。' },
+            { id: 21, type: 'judge', content: '为防止红眼现象，在光线较弱的室内或在室外夜景近距离使用闪光灯拍摄人像，应启用闪光模式。', answer: '×',解析: '防止红眼现象应启用防红眼闪光模式，该模式会在主闪光前发出预闪光，使被摄者瞳孔收缩，从而减少红眼现象。' },
+            { id: 22, type: 'judge', content: '光源投射方向与摄影机的拍摄方向成90度角的光线称为侧逆光', answer: '×',解析: '光源投射方向与拍摄方向成90度角的光线称为侧光，侧逆光的角度通常在120-150度之间。' },
+            { id: 23, type: 'judge', content: '相机设置的色温值低于环境光线的色温值时所摄画面的色调偏暖。', answer: '×',解析: '当相机设置的色温低于环境实际色温时，画面会偏冷色调；反之，设置色温高于实际色温时，画面会偏暖色调。' },
+            { id: 24, type: 'judge', content: 'Photoshop 中按住空格键单击图像窗口下方的状态显示栏会弹出数字框显示当前图像的高度、宽度。', answer: '×',解析: '在Photoshop中，按住Alt键（Windows）或Option键（Mac）单击状态栏可以弹出显示图像高度、宽度等信息的数字框，而非空格键。' },
+            { id: 25, type: 'judge', content: '照相机镜头上标有f=80m,指的是镜头的口径。', answer: '×',解析: '镜头上标注的f=80mm表示的是镜头的焦距，而非口径。镜头口径通常以最大光圈值表示，如f/1.8。' },
+            { id: 26, type: 'judge', content: '18%指的是自然景物的平均反光率。', answer: '√',解析: '18%灰是摄影中常用的中间调基准，代表了自然景物的平均反光率，是测光和曝光的重要参考标准。' },
+            { id: 27, type: 'judge', content: '在Photoshop中,位图模式、灰度模式、双色调模式和索引颜色模式图像都是只有一个通道。', answer: '√',解析: '这些模式的图像都只有一个通道：位图和灰度模式是灰度通道，双色调模式是一个包含多种灰色调的通道，索引颜色模式是一个包含颜色索引的单通道。' },
+            { id: 28, type: 'judge', content: '光源投射方向与摄影机的拍摄方向成90°左右角的光线称为侧逆光。', answer: '×',解析: '90°左右角的光线称为侧光，侧逆光的角度更大，通常在135°左右，从被摄体侧后方照射。' },
+            { id: 29, type: 'judge', content: '像素图的像素是指单位长度上的像素数量。', answer: '×',解析: '单位长度上的像素数量称为分辨率，而像素是构成数字图像的基本单位，是一个个的彩色点。' },
+            { id: 30, type: 'judge', content: 'FA值指的是闪光灯的闪光指数', answer: '×',解析: '闪光灯的闪光指数通常用GN表示，而非FA。闪光指数是衡量闪光灯输出光量的指标。' },
+            { id: 31, type: 'judge', content: '默认的暂存磁盘ScratchDisk创建在启动磁盘上。', answer: '√',解析: 'Photoshop默认将启动磁盘作为暂存磁盘（Scratch Disk），用于临时存储处理大型图像时的数据。' },
+            { id: 32, type: 'judge', content: '入射式测光表又叫照度测量表。', answer: '√',解析: '入射式测光表测量的是照射到被摄体上的光线强度（照度），因此也称为照度测量表，与测量反射光的亮度测光表相对。' },
+            { id: 33, type: 'judge', content: '135胶片相机拍摄时所使用的胶片的宽度为50mm。', answer: '×',解析: '135胶片的宽度为35mm，这也是35mm相机名称的由来。50mm通常指的是镜头焦距。' },
+            { id: 34, type: 'judge', content: '广角镜头产生的畸变是圆形畸变。', answer: '×',解析: '广角镜头产生的主要是桶形畸变（画面边缘向外凸出），长焦镜头则容易产生枕形畸变（画面边缘向内凹陷）。' },
+            { id: 35, type: 'judge', content: '用灯光型白平衡(胶片)在灯光下拍摄时,画面的色彩不偏色,效果异常。', answer: '×',解析: '灯光型白平衡（或胶片）专为灯光环境设计，在相应的灯光下使用可获得准确的色彩还原，不会出现偏色，效果正常。' },
+            { id: 36, type: 'judge', content: 'Photoshop中CMYK格式的层可以进行渲染/镜头光晕效果。', answer: '×',解析: '在Photoshop中，许多滤镜（包括镜头光晕）在CMYK模式下不可用，需要先转换为RGB模式才能应用这些滤镜。' },
+            { id: 37, type: 'judge', content: '光圈系数F的值越大,通过的光线越多。', answer: '×',解析: '光圈系数F的值与通过的光线量成反比，F值越大，光圈越小，通过的光线越少。' },
+            { id: 38, type: 'judge', content: '广角镜头视角大，适合拍摄人物形象，宜于表现被摄人物的面貌和高大形象', answer: '×',解析: '广角镜头在近距离拍摄人物时容易产生透视畸变（如鼻子变大、脸型变形），不太适合拍摄人物肖像。表现人物高大形象通常使用仰拍而非广角镜头的特性。' },
+            { id: 39, type: 'judge', content: 'RAW文件格式的优势在于其动态范固大，影像层次丰富，缺点是不能精确调整反差、亮度、锐度、饱和度、色调和白平衡，而且拍摄时可能出现的一些技术失误不能在后期获得更大范围的调整。', answer: '×',解析: 'RAW格式的一大优势就是保留了更多原始数据，允许在后期进行更精确的调整，包括反差、亮度、白平衡等，并且对拍摄时的技术失误有更大的调整空间。' },
+            { id: 40, type: 'judge', content: '位图模式的图像其色彩深度为5', answer: '×',解析: '位图模式（Bitmap）的图像色彩深度为1位，只包含黑白两种颜色，每个像素只用1位二进制数表示。' },
+            { id: 41, type: 'judge', content: '副光一般是用白光。', answer: '×',解析: '副光（补光）通常使用与主光相同色温的光线，不一定是白光，根据拍摄需求也可以使用带有颜色的补光。' },
+            { id: 42, type: 'judge', content: 'IS0100F5.61/60的曝光量与S0100F11/15的曝光量相等。', answer: '√',解析: '曝光量由光圈、快门和ISO共同决定。当ISO不变时，光圈从F5.6（大）缩小到F11（小），进光量减少4倍，快门从1/60秒放慢到1/15秒，进光量增加4倍，总曝光量保持不变。' },
+            { id: 43, type: 'judge', content: '长焦镜头可以加强画面的透视效果。', answer: '×',解析: '长焦镜头会压缩透视，使远近物体看起来更接近；广角镜头则能加强透视效果，夸大远近物体的距离感。' },
+            { id: 44, type: 'judge', content: '阴影处的色温值一般为5000K。', answer: '×',解析: '阴影处的色温通常较高（偏冷），一般在7000K以上，而5000K左右接近自然光的平均色温。' },
+            { id: 45, type: 'judge', content: '分区曝光法是由安塞尔·亚当斯提出的。', answer: '√',解析: '分区曝光法（Zone System）是由著名摄影师安塞尔·亚当斯（Ansel Adams）和弗雷德·阿奇博尔德（Fred Archer）共同提出的一种精确控制曝光和显影的方法。' },
+            { id: 46, type: 'judge', content: 'TIFF 格式存储可以包含专色通道但不能包含alpha 通道。', answer: '×',解析: 'TIFF格式是一种灵活的图像格式，既可以包含专色通道，也可以包含alpha通道（用于保存透明信息）。' },
+            { id: 47, type: 'judge', content: '在双色调模式中“双色调曲线”的作用是决定超出色域范围的色彩如何在图像中校正。', answer: '×',解析: '双色调曲线用于控制每种油墨的浓度和分布，以创建丰富的灰色调或其他双色调效果，与超出色域的色彩校正无关。' },
+            { id: 48, type: 'judge', content: '50mm焦距值的镜头是标准镜头。', answer: '×',解析: '标准镜头的焦距通常接近或等于所使用胶片（或传感器）的对角线长度。对于135相机（35mm），标准镜头焦距约为50mm，但对于其他画幅的相机，标准镜头的焦距不同。' },
+            { id: 49, type: 'judge', content: '图像分率和打印分用率是一同事。', answer: '×',解析: '图像分辨率（ppi）指数字图像中单位长度的像素数量，而打印分辨率（dpi）指打印机每英寸打印的墨点数，两者概念不同，但相互关联。' },
+            { id: 50, type: 'judge', content: '索引色模式图像可以被保存为JPEG 格式', answer: '×',解析: '索引色模式图像通常保存为GIF或PNG-8格式，JPEG格式不支持索引色模式，保存时会自动转换为RGB模式。' },
+            { id: 51, type: 'judge', content: '图像的色彩饱和度可以使用“曲线”命令进行调整。', answer: '×',解析: '曲线命令主要用于调整图像的色调范围和对比度，虽然可以间接影响饱和度，但不是调整色彩饱和度的专用命令。调整饱和度常用“色相/饱和度”命令。' },
+            { id: 52, type: 'judge', content: 'JPEGB 式是最流行的图像格式。虽然它属于压缩的图像格式，但是JPEG各式图像文件小，影像的损失也不大。因此，也是扫描后影像的首选保存格式。', answer: '×',解析: 'JPEG是一种有损压缩格式，虽然文件小且流行，但不适合作为扫描后影像的首选保存格式，尤其是需要后期编辑的图像，应优先选择TIFF等无损格式。' },
+            // 单选题 (53-286)
+            { id: 53, type: 'single', content: '要做到遵 纪守法，要严格要求自己，在实践中养成遵纪守法的( )。', options: ['A、 职业意识', 'B、 守法观念', 'C、 职业纪律', 'D、 良好习惯'], answer: 'D',解析: '遵纪守法不仅是一种观念，更需要在实践中养成习惯，才能真正做到自觉遵守法律法规和职业纪律。良好习惯是长期实践形成的稳定行为方式，是遵纪守法的基础。' },
+            { id: 54, type: 'single', content: '要做到遵纪守法，要求我们敢于同违法违纪现象和不正之风作( )。', options: ['A、 斗争', 'B、 妥协', 'C、 回避', 'D、 商量'], answer: 'A',解析: '遵纪守法不仅要求自身遵守纪律法律，还应敢于对违法违纪现象和不正之风进行斗争，维护法律和纪律的尊严，这是公民和职业人员的责任。' },
+            { id: 55, type: 'single', content: '下列关于敬业精神得说法中,不正确得就是()', options: ['A、 在职业活动中,敬业就是人们对从业人员得最根本、最核心得要求', 'B、 敬业就是职业活动得灵魂,就是从业人员得安身立命之本', 'C、 敬业就是一个人做好工作、取得事业成功得保证', 'D、 对从业人员来说,敬业一般意味着将会失去很多工作与生活得乐趣'], answer: 'D',解析: '敬业精神并不会导致失去工作与生活的乐趣，相反，敬业的人往往能从工作中获得成就感和满足感，实现个人价值，从而提升生活乐趣。其他选项均正确描述了敬业精神的重要性。' },
+            { id: 56, type: 'single', content: '硬调人像的主体在画面中较为突出,不适合于拍摄()。', options: ['A、 中老年男性', 'B、 运动员', 'C、 建筑工人', 'D、 柔美的女性'], answer: 'D',解析: '硬调人像对比度高，光影强烈，适合表现刚毅、有力的人物形象，如中老年男性、运动员、建筑工人等。而柔美的女性更适合用软调（低对比度）表现其温柔、细腻的特质。' },
+            { id: 57, type: 'single', content: '失业保险社会化发放工作必须指定()代为发放。', options: ['A、 一家国有商业银行', 'B、 多家国有商业银行', 'C、 银行', 'D、 一家银行、也包括其他金融银行'], answer: 'A',解析: '根据相关规定，失业保险社会化发放通常指定一家国有商业银行代为发放，以确保资金发放的安全、稳定和规范。' },
+            { id: 58, type: 'single', content: '伦勃朗照明效果最适合拍摄()。', options: ['A、 女性', 'B、 儿童', 'C、 群像', 'D、 低调男性'], answer: 'D',解析: '伦勃朗照明是一种经典的布光方式，特点是在人物脸部一侧形成三角形光斑，另一侧处于阴影中，适合表现人物的立体感和沉稳气质，尤其适合低调的男性肖像。' },
+            { id: 59, type: 'single', content: '火警电话、交通事故报警台、急救电话各是什么?()', options: ['A、 119、122、120', 'B、 119、120、122', 'C、 119、110、122', 'D、 119、110、120'], answer: 'A',解析: '我国统一的紧急电话：火警119，交通事故报警122，急救120，治安报警110。需要熟记这些重要号码以便紧急情况下使用。' },
+            { id: 60, type: 'single', content: '不同结构的物体固有色变化对画面()有影响', options: ['A、 明暗', 'B、 光源', 'C、 色彩', 'D、 线条'], answer: 'C',解析: '固有色是物体在白光照射下呈现的颜色，不同物体的固有色变化直接影响画面的色彩构成和色调表现，而明暗主要受光线强度影响，光源是照明条件，线条是构图元素。' },
+            { id: 61, type: 'single', content: '镜头口径越大.通光量越()', options: ['A、 大', 'B、 小', 'C、 高', 'D、 低'], answer: 'A',解析: '镜头口径即镜头的有效通光直径，口径越大，单位时间内通过的光线越多，通光量越大，在弱光环境下拍摄更有优势。' },
+            { id: 62, type: 'single', content: '建筑物内发生火灾时,应该首先()', options: ['A、 立即停止工作,通过指定的最近的安全通道离开。', 'B、 乘坐电梯离开', 'C、 向高处逃生', 'D、 从窗口逃生'], answer: 'A',解析: '建筑物发生火灾时，应首先通过最近的安全通道有序撤离，切勿乘坐电梯（可能因断电被困），也不应盲目向高处或窗口逃生，以免错过最佳逃生时机。' },
+            { id: 63, type: 'single', content: '当影调调节器将数字调到+5时,照片的变化时()', options: ['A、 全黑', 'B、 全白', 'C、 含有细节', 'D、 标准'], answer: 'B',解析: '影调调节器（通常指亮度调节）数值越高，画面越亮。+5是较高的调整值，会使照片亮度大幅增加，可能导致高光溢出，呈现全白状态，失去细节。' },
+            { id: 64, type: 'single', content: '手机摄像头和相机摄像头,其影响画质体现在()的提升上', options: ['A、 像素', 'B、 内存', 'C、 处理器', 'D、 存储卡'], answer: 'A',解析: '像素是影响图像分辨率和细节表现的重要因素，虽然画质还受传感器尺寸、镜头质量等影响，但在手机和相机的比较中，像素提升是画质提升的直接体现之一。' },
+            { id: 65, type: 'single', content: '对于一幅高调图像,在相机的直方图显示中,峰值应当()。', options: ['A、 处于中间', 'B、 两侧都有', 'C、 靠近左侧', 'D、 靠近右侧'], answer: 'D',解析: '高调图像以亮色调为主，直方图中像素分布集中在右侧（高光区域），峰值靠近右侧；低调图像峰值靠近左侧，中间调峰值在中间。' },
+            { id: 66, type: 'single', content: '站姿在人像摄影中应用最多,它能够()。', options: ['A、 充分展示人物的身体线条', 'B、 灵活多变', 'C、 包含对一个人性格多面的表达', 'D、 展现人物整体仪态与气质精神'], answer: 'A',解析: '站姿是人像摄影中最基本的姿势之一，能够充分展示人物的身体线条和比例，其他选项更多是多种姿势共同作用的结果，而非站姿特有的优势。' },
+            { id: 67, type: 'single', content: '分割式照明在艺术效果上会营造一种()气氛。', options: ['A、 鲜活', 'B、 硬朗', 'C、 暧昧', 'D、 明快'], answer: 'B',解析: '分割式照明是一种将人物面部一分为二，一半受光一半处于阴影的布光方式，形成强烈的明暗对比，营造出硬朗、戏剧化的氛围。' },
+            { id: 68, type: 'single', content: '在低调人像的用光上,一般适合用(作主光。', options: ['A、 柔光', 'B、 都可以', 'C、 硬光', 'D、 都不可以'], answer: 'C',解析: '低调人像以暗色调为主，硬光（如聚光灯）能产生强烈的明暗对比，突出主体轮廓，增强画面的戏剧性和层次感，更适合低调人像的表现。' },
+            { id: 69, type: 'single', content: '()是语言沟通?', options: ['A、 副语言', 'B、 书面', 'C、 表情', 'D、 体态'], answer: 'B',解析: '语言沟通包括口头语言和书面语言，书面沟通是通过文字进行的信息交流，属于语言沟通。副语言、表情和体态属于非语言沟通。' },
+            { id: 70, type: 'single', content: '能使主体产生轮廓光的是()', options: ['A、 逆光', 'B、 侧光', 'C、 顺光', 'D、 前侧光'], answer: 'A',解析: '逆光从被摄体后方照射，能在主体边缘形成明亮的轮廓光，将主体与背景分离，增强画面的立体感和空间感。其他光线方向难以产生明显的轮廓光效果。' },
+            { id: 71, type: 'single', content: '在编辑软件中图片序列有50张，并设置帧速率为25帧/秒，生成的延时视频时长是()', options: ['A、 2秒', 'B、 3秒', 'C、 4秒', 'D、 5秒'], answer: 'A',解析: '视频时长=图片总数÷帧速率，即50÷25=2秒。帧速率表示每秒播放的帧数，是计算视频时长的基本参数。' },
+            { id: 72, type: 'single', content: '好照片的关键要素是()', options: ['A、 场景美观', 'B、 色彩和谐', 'C、 画面简洁', 'D、 质感强烈'], answer: 'C',解析: '画面简洁是好照片的关键要素之一，它能突出主体，避免干扰，让观众快速理解照片的主题。其他选项虽然重要，但简洁是基础。' },
+            { id: 73, type: 'single', content: '商品摄影更适合使用以下哪种分类方法( )', options: ['A、 品名分类', 'B、 地名分类', 'C、 人名分类', 'D、 色彩分类'], answer: 'A',解析: '商品摄影的核心是展示商品本身，按品名分类能直接对应商品种类，方便查找和管理，符合商品展示和销售的需求，其他分类方法不太适合商品摄影的特性。' },
+            { id: 74, type: 'single', content: '显影液中若忘了添加促进剂按正常显影条件冲洗出的胶卷将()。', options: ['A、 密度正常', 'B、 密度偏大', 'C、 没有任何影像', 'D、 密度偏小'], answer: 'D',解析: '促进剂（如碳酸钠）的作用是加速显影过程，提高显影液的碱性。缺少促进剂会导致显影速度减慢，相同时间内卤化银还原不足，胶卷密度偏小。' },
+            { id: 75, type: 'single', content: '()设计要求将照明靠近照相机处适当布置亮些,便于操作;将拍摄者的位置布置暗些,便于观察布光效果,又有利于被摄者集中注意力。', options: ['A、 型影室', 'B、 儿童影室', 'C、 影室摄影光源', 'D、 影室基础照明'], answer: 'D',解析: '影室基础照明是指为影室提供基本照明的系统，其设计需要兼顾操作便利性和拍摄效果，靠近相机处亮便于操作，拍摄者位置暗便于观察布光和引导被摄者。' },
+            { id: 76, type: 'single', content: '具象符号的形态属性是指摄影画面里()。', options: ['A、 具象符号的光亮程度', 'B、 具象符号所体现出的形状特征', 'C、 具象符号形态本身具有的造型内涵', 'D、 具象符号的变形。'], answer: 'C',解析: '具象符号的形态属性不仅指其外在形状，更强调形态本身所具有的造型内涵和象征意义，能够传递特定的视觉信息和情感。' },
+            { id: 77, type: 'single', content: '()的主要方法是以侧逆光拍摄低调人像来获得层次丰富的影调,选择斜侧向拍摄角度,利用透视对比等。', options: ['A、 表现人物五官轮廓、肤色', 'B、 表现人物心理活动', 'C、 表现人物面部表情', 'D、 表现人物立体感'], answer: 'D',解析: '侧逆光、斜侧向拍摄角度和透视对比都是增强画面立体感的有效手段，尤其适合表现人物的立体形态，使人物从平面画面中凸显出来。' },
+            { id: 78, type: 'single', content: '摄影造型是视觉与平面的关系，拍摄时，人物是处在()', options: ['A、 二维空间:', 'B、 时间空间:', 'C、 三维空间:', 'D、 立体空间:'], answer: 'C',解析: '摄影虽然最终呈现的是二维平面图像，但拍摄对象（包括人物）存在于真实的三维空间中，摄影造型需要在二维平面上再现三维空间的深度感和立体感。' },
+            { id: 79, type: 'single', content: '商业人像摄影有许多环节，当底片或相片上有瑕疵或花痕时，首先通过什么方法处理()', options: ['A、 道歉:', 'B、 降价:', 'C、 重拍:', 'D、 修整:'], answer: 'D',解析: '在商业人像摄影中，对于底片或相片上的瑕疵，首先应尝试通过后期修整（如数码修图或暗房技术）来弥补，只有在无法修整的情况下才考虑重拍，道歉和降价是最后的处理方式。' },
+            { id: 80, type: 'single', content: '眼睛是人的五官的重要位置，新娘眼妆一般不涂()', options: ['A、 桃红:', 'B、 浅灰;', 'C、 浅蓝:', 'D、 紫绿;'], answer: 'B',解析: '新娘眼妆通常选择柔和、喜庆的颜色，如桃红、浅蓝等，以增强眼部神采和整体美感。浅灰色较为沉闷，不符合新娘妆的整体风格，一般不采用。' },
+            { id: 81, type: 'single', content: '婚纱照使新娘娇艳，具有结婚象征意义，发型一般采用:()', options: ['A、 扎辨子:', 'B、 剪短发:', 'C、 盘头发:', 'D、 戴假发:'], answer: 'C',解析: '盘头发是婚纱照中常见的发型，显得端庄、优雅，符合婚礼的正式氛围，具有传统美感和象征意义，其他发型相对不够正式或缺乏婚礼的仪式感。' },
+            { id: 82, type: 'single', content: '儿童艺术照妆，切忌给他们()', options: ['A、 画眉:', 'B、 修眉:', 'C、 画唇:', 'D、 打粉底:'], answer: 'A',解析: '儿童的眉毛通常较淡且自然，画眉会显得不自然，破坏儿童的纯真感。儿童艺术照应尽量保持自然，避免过度化妆，尤其是改变其自然眉形。' },
+            { id: 83, type: 'single', content: '暗房内冲洗黑白负片，中途可以观察显影效果，其安全灯应为什么色灯()', options: ['A、 白色', 'B、 黄色', 'C、 红色', 'D、 暗绿色'], answer: 'C',解析: '黑白负片对红色光不敏感，红色安全灯不会使未曝光的卤化银感光，因此适合在暗房冲洗黑白负片时使用，方便中途观察显影效果。' },
+            { id: 84, type: 'single', content: '彩色负片的冲洗，厂家都推荐自己的冲洗配方工艺,CN-16配方工艺是哪个公司推荐的()', options: ['A、 柯达', 'B、 富士', 'C、 爱克法', 'D、 乐凯'], answer: 'B',解析: 'CN-16是富士公司推荐的彩色负片冲洗配方工艺，不同厂家通常有自己的标准冲洗工艺，以保证胶片的最佳效果。' },
+            { id: 85, type: 'single', content: '显影的作用是使已曝光的卤化银还原为()', options: ['A、 潜影', 'B、 金属银', 'C、 影像', 'D、 图像'], answer: 'B',解析: '显影过程中，显影剂将已曝光的卤化银还原为金属银，形成可见的银影像，这是胶片成像的关键步骤。潜影是曝光后未显影的状态，影像和图像是更宏观的概念。' },
+            { id: 86, type: 'single', content: '用一张120(60X60mm)负片放大照片是应选择什么焦距的镜头合适()', options: ['A、 45mm', 'B、 75mm', 'C、 90mm', 'D、 105mm'], answer: 'A',解析: '放大镜头的焦距应根据底片尺寸选择，对于60×60mm的120底片，45mm焦距的放大镜头较为合适，能覆盖整个底片面积，保证放大效果。' },
+            { id: 87, type: 'single', content: '黑白印相纸和放大纸都以纸号来表示反差，反差最大的纸号是几号()', options: ['A、 1号', 'B、 2号', 'C、 3号', 'D、 4号'], answer: 'D',解析: '黑白相纸的纸号越大，反差越大。1号纸反差最小，4号纸反差最大，可根据需要表现的影调效果选择合适的纸号。' },
+            { id: 88, type: 'single', content: '彩色扩印机和彩色放大机均有校正颜色的滤色片(镜)并以英文字母代表，请选出品红色滤色片的代号()', options: ['A、 M:', 'B、 C:', 'C、 Y:', 'D、 R:'], answer: 'A',解析: '彩色校正滤色片通常用其英文名称首字母表示：品红色（Magenta）为M，青色（Cyan）为C，黄色（Yellow）为Y，红色（Red）为R。' },
+            { id: 89, type: 'single', content: '黑白底片或照片中的影像，可以通过化学的办法除去或增加其密度。除去金属银(或称减薄)通常是使用()', options: ['A、 重铬酸钾', 'B、 铁氰化钾', 'C、 硝酸银', 'D、 氯化钾'], answer: 'B',解析: '铁氰化钾是常用的减薄剂成分，能与金属银反应，溶解部分银颗粒，从而减少底片或照片的密度。硝酸银用于加厚，其他选项不常用于减薄处理。' },
+            { id: 90, type: 'single', content: '摄影师要给婴幼儿一种亲切感，因此在表情上要()', options: ['A、 认真', 'B、 严肃', 'C、 紧张', 'D、 温和'], answer: 'D',解析: '婴幼儿对成人的表情非常敏感，温和的表情能让他们感到安全和舒适，便于拍摄出自然、愉悦的照片。认真、严肃或紧张的表情可能会让婴幼儿感到不安。' },
+            { id: 91, type: 'single', content: '拍摄黑白片时，为了突出蓝天白云，应加滤色镜是()', options: ['A、 蓝色', 'B、 黄色', 'C、 绿色', 'D、 深红'], answer: 'A',解析: '蓝色滤色镜会透过蓝色光，吸收其他色光，在黑白摄影中能使蓝天更暗，白云更突出，增强天空的层次感。黄色滤色镜则会使蓝天变亮，不适合突出蓝天白云。' },
+            { id: 92, type: 'single', content: '拍摄低调人物其用光一般以()', options: ['A、 顺光', 'B、 前侧光', 'C、 侧光', 'D、 逆光'], answer: 'C',解析: '侧光能够在人物面部形成明显的明暗对比，暗部面积较大，适合表现低调人像的神秘感和立体感，顺光会使画面过亮，逆光主要用于勾勒轮廓。' },
+            { id: 93, type: 'single', content: '摄影师应根据什么情况向顾客推荐项目()', options: ['A、 顾客实际需要', 'B、 本店特色项目', 'C、 摄影师特长项目', 'D、 营利较高项目'], answer: 'A',解析: '摄影师应首先考虑顾客的实际需求，推荐适合顾客的项目，这是职业道德的基本要求，也是获得顾客满意的关键。其他因素应在满足顾客需求的基础上考虑。' },
+            { id: 94, type: 'single', content: '下列照片哪些不属于纪念照内容()', options: ['A、 生日照', 'B、 婚纱照', 'C、 合影照', 'D、 证件照'], answer: 'D',解析: '纪念照是为了纪念特定事件或时刻而拍摄的照片，如生日、婚礼、聚会等。证件照主要用于官方文件，强调规范性和真实性，不属于纪念照范畴。' },
+            { id: 95, type: 'single', content: '一般顾客喜欢反差高一些的照片，因为反差高的照片()', options: ['A、 清晰明朗', 'B、 温馨柔和', 'C、 潇酒大方', 'D、 时尚流行'], answer: 'A',解析: '高反差照片明暗对比强烈，主体突出，画面显得清晰明朗，视觉冲击力强，因此更受一般顾客喜爱。温馨柔和通常是低反差照片的特点。' },
+            { id: 96, type: 'single', content: '在制作彩色照片时，遇上色彩饱和度低，不要调节()', options: ['A、 光谱', 'B、 相纸', 'C、 药水', 'D、 曝光'], answer: 'A',解析: '光谱是光的波长分布，无法直接调节。色彩饱和度可以通过调整相纸类型、药水浓度、曝光参数等方式来控制，这些都是实际操作中可调节的因素。' },
+            { id: 97, type: 'single', content: '摄影与绘画构图不同，其系统的调整主要是通过拍摄方向、拍摄高度和()', options: ['A、 拍摄距离', 'B、 拍摄人物', 'C、 拍摄景物', 'D、 拍摄范围'], answer: 'A',解析: '摄影构图的三大基本要素是拍摄方向（正面、侧面等）、拍摄高度（平拍、仰拍、俯拍）和拍摄距离（决定景别），这三者共同决定了画面的构图效果，与绘画的静态构图不同。' },
+            { id: 98, type: 'single', content: '无论用什么光源拍摄多人合影，其布光适宜选择()', options: ['A、 顺光', 'B、 侧光', 'C、 侧逆光', 'D、 顶光'], answer: 'A',解析: '顺光照射均匀，能保证多人合影中每个人都得到足够的光线，避免出现局部过暗的情况，有利于表现人物的表情和细节，其他光线方向容易造成部分人物处于阴影中。' },
+            { id: 99, type: 'single', content: '在常明光源拍摄布质不反光的物体，使用何种测光表较为理想()', options: ['A、 反射式:', 'B、 入射式:', 'C、 点测光:', 'D、 闪光测光:'], answer: 'B',解析: '入射式测光表测量的是照射到物体上的光线强度，对于不反光的布质物体，能更准确地反映实际照明情况，获得合适的曝光。反射式测光可能受物体颜色影响，点测光适合测量特定区域。' },
+            { id: 100, type: 'single', content: '亮度测光表是测量被摄物体的()', options: ['A、 受光面积', 'B、 反射光亮度', 'C、 受光强度', 'D、 受光范围'], answer: 'B',解析: '亮度测光表（反射式测光表）测量的是被摄物体反射回来的光线亮度，是摄影中最常用的测光方式，能直接反映物体在照片中的亮度表现。' },
+            { id: 101, type: 'single', content: '摄影师用各种玩具逗引对方，在逗引的同时()', options: ['A、 按下快门', 'B、 喊一二三', 'C、 观察相机', 'D、 摆弄玩具'], answer: 'A',解析: '在拍摄儿童等难以配合的对象时，摄影师常用玩具逗引以获得自然表情，此时应在被摄者表情最佳的瞬间及时按下快门，捕捉理想画面。' },
+            { id: 102, type: 'single', content: '给儿童拍照，在启发和逗引中，动作要有()', options: ['A、 滑稽性', 'B、 针对性', 'C、 模仿性', 'D、 哲理性'], answer: 'A',解析: '儿童对滑稽、有趣的动作和表情反应更积极，容易被逗笑，从而拍摄到自然、愉悦的照片。针对性是指针对不同儿童的特点，滑稽性是动作本身的特性。' },
+            { id: 103, type: 'single', content: '在拍摄合影时，现场只有不规则的山石或土丘而无其它设施时，队形的排列采取什么方法()', options: ['A、 自然排列', 'B、 摆桌椅登', 'C、 搬合影架', 'D、 塔木板架'], answer: 'A',解析: '在没有正规设施的自然环境中拍摄合影，应采用自然排列的方式，利用地形的高低起伏安排人物位置，既方便又能融入环境，其他选项需要额外设备，不切实际。' },
+            { id: 104, type: 'single', content: '由于镜头的透视关系是近大远小，所以合影时，体形瘦小的人适宜安排在()', options: ['A、 前面', 'B、 后面', 'C、 中间', 'D、 两边'], answer: 'A',解析: '根据近大远小的透视原理，将体形瘦小的人安排在前面，能使其在画面中显得稍大，与后排体形较大的人形成平衡，使整体比例更协调。' },
+            { id: 105, type: 'single', content: '如用广角镜拍合影，队伍的排列要排成相应的()', options: ['A、 直线', 'B、 弧形', 'C、 梯形', 'D、 圆形'], answer: 'B',解析: '广角镜头存在边缘畸变，直线排列的合影在边缘会出现变形。排成弧形可以抵消这种畸变，使每个人物的比例更正常，画面更协调。' },
+            { id: 106, type: 'single', content: '照射距离为1米时的照度是A单位，那么距离3米时的照度就是()', options: ['A、 1/3A', 'B、 1/6A', 'C、 1/9A', 'D、 1/15A'], answer: 'C',解析: '照度与距离的平方成反比（平方反比定律），距离变为3倍，照度变为原来的1/9，即1/9A。这是灯光照明的基本规律。' },
+            { id: 107, type: 'single', content: '亮度测光往往与人的肌肤为标准测光，黄种人的肌肤反光率大约是()', options: ['A、 10%一18%', 'B、 25%一35%', 'C、 35%一45%', 'D、 45%一55%'], answer: 'A',解析: '黄种人的肌肤反光率约为10%-18%，接近摄影中常用的18%灰标准，因此在测光时常以皮肤为参考，确保人物曝光准确。' },
+            { id: 108, type: 'single', content: '在下列情况中，指出造成画面倒易律失效的时间为()', options: ['A、 1/125秒', 'B、 1/250秒', 'C、 1/500秒', 'D、 1/2000秒'], answer: 'D',解析: '倒易律失效指当曝光时间过短（通常短于1/1000秒）或过长时，相同曝光量（光圈×快门）产生的效果不同。1/2000秒属于极短曝光时间，容易出现倒易律失效。' },
+            { id: 109, type: 'single', content: '要想夸大空间透视感应选用()', options: ['A、 广角镜头', 'B、 标准镜头', 'C、 中焦镜头', 'D、 长焦镜头'], answer: 'A',解析: '广角镜头具有强烈的透视感，能夸大前景和背景的大小差异，增强空间纵深感，适合表现宏大的场景和强烈的空间透视效果。长焦镜头则会压缩透视。' },
+            { id: 110, type: 'single', content: '用一盏灯照明拍摄人像时，当灯距为1米时用f/5.6，1/60秒曝光准确，当灯距为2米时，光圈不变，快门速度应为:()', options: ['A、 1/15秒', 'B、 1/8秒', 'C、 1/4秒', 'D、 1/2秒'], answer: 'A',解析: '根据平方反比定律，灯距变为2倍，照度变为1/4，要保持曝光量不变，需增加4倍曝光时间。原快门1/60秒，4倍即为1/15秒（1/60×4=4/60≈1/15）。' },
+            { id: 111, type: 'single', content: '美国制感光度ASA50相当于中国制的感光度(GB)多少度()', options: ['A、 GB18°', 'B、 GB21°', 'C、 GB24°', 'D、 GB27*'], answer: 'A',解析: '感光度换算中，ASA与GB的数值大致对应，ASA50约等于GB18°，ASA100约等于GB21°，数值每增加3°，感光度约增加一倍。' },
+            { id: 112, type: 'single', content: '彩色感光胶片按光源色温要求，可分为()', options: ['A、 色盲片、分色片、全色片', 'B、 彩色正片、彩色负片', 'C、 日光型彩色片、灯光型彩色片、日光灯光通用型彩色片', 'D、 彩色反转片、彩色中间片、一次成像片'], answer: 'C',解析: '彩色胶片按适应的光源色温分类，可分为日光型（适应5500K左右色温）、灯光型（适应3200K左右色温）和通用型（可适应多种色温），这是根据拍摄环境光源选择胶片的重要依据。' },
+            { id: 113, type: 'single', content: '照相纸号数越大，它的[]', options: ['A、 清晰度越高', 'B、 清晰度越低', 'C、 反差越小', 'D、 反差越大'], answer: 'D',解析: '照相纸的号数是表示其反差特性的指标，号数越大，反差越大，能表现的明暗对比越强烈，与清晰度无关。' },
+            { id: 114, type: 'single', content: '感光材料的保护层具有()或产生摩擦灰雾的作用。', options: ['A、 有良好的耐光、耐寒、耐热等性能', 'B、 膨胀和收缩率小，不易变形', 'C、 防止胶卷在冲洗中产生过度弯曲', 'D、 防止乳剂层被划伤'], answer: 'D',解析: '感光材料的保护层位于乳剂层表面，主要作用是保护乳剂层免受划伤，同时减少摩擦产生的灰雾，确保影像质量。' },
+            { id: 115, type: 'single', content: '()胶片一般应保存在0℃以下。', options: ['A、 中速黑白负片', 'B、 高速黑白负片', 'C、 专业型彩色负片或反转片', 'D、 一般彩色感光材料'], answer: 'C',解析: '专业型彩色负片或反转片对温度更敏感，为了长期保存并保持其性能稳定，通常需要保存在0℃以下，普通彩色和黑白胶片可在较高温度下保存。' },
+            { id: 116, type: 'single', content: '低于 20℃为()的保存温度。', options: ['A、 黑白相纸、彩色相纸', 'B、 彩色相纸、光而相纸', 'C、 彩色相纸', 'D、 黑白相纸'], answer: 'D',解析: '黑白相纸的保存温度通常建议低于20℃，以防止其感光性能发生变化，彩色相纸对温度和湿度的要求更高，通常需要更低的保存温度。' },
+            { id: 117, type: 'single', content: '光源投射在被摄景物上的光线()即为光源的光照度。', options: ['A、 衍射性质', 'B、 温度和角度', 'C、 反射方向', 'D、 强弱'], answer: 'D',解析: '光照度是衡量光源照射到物体表面的光线强弱的物理量，单位为勒克斯（lux），与光线的强弱直接相关，其他选项不直接表示光照度。' },
+            { id: 118, type: 'single', content: '黄种人的肤色、水泥地面、草地等的反光率很接近()。', options: ['A、 35%灰', 'B、 18%中灰', 'C、 10%灰', 'D、 50%灰'], answer: 'B',解析: '18%中灰是摄影中的标准反光率，许多自然物体如黄种人肤色、水泥地面、草地等的平均反光率都接近这一数值，是测光的重要参考标准。' },
+            { id: 119, type: 'single', content: '摄影曝光指按动照相机()使胶片感光。', options: ['A、 光圈、快门', 'B、 闪光灯', 'C、 闪光灯、光圈', 'D、 快门'], answer: 'D',解析: '摄影曝光的核心是通过快门的开启使胶片（或传感器）接受光线照射而感光，光圈控制进光量，闪光灯提供额外光源，但曝光的动作本身是由快门触发的。' },
+            { id: 120, type: 'single', content: '曝光组合参数是指舶摄时使用的()与快门时间的组合。', options: ['A、 光圈系数', 'B、 镜头有效□径大小', 'C、 焦距', 'D、 景深'], answer: 'A',解析: '曝光组合是指光圈系数和快门速度的组合，两者共同决定了曝光量的大小，是摄影中控制曝光的基本参数。' },
+            { id: 121, type: 'single', content: '景物或影像的明暗比照差异称为()', options: ['A、 密度', 'B、 比照度', 'C、 宽密度', 'D、 反差'], answer: 'D',解析: '反差指景物或影像中明暗对比的差异程度，反差大则明暗对比强烈，反差小则对比柔和。密度指感光材料经曝光显影后形成的黑化程度，与反差不同。' },
+            { id: 122, type: 'single', content: '以下现象中，()是曝光缺乏底片的主要表现。', options: ['A、 底片密度较厚', 'B、 彫像没有层次', 'C、 底片看上去完全透亮，失去层次', 'D、 对应于景物亮部的密度往往很大'], answer: 'C',解析: '曝光不足会导致底片上的卤化银还原不足，表现为底片整体透亮，暗部细节丢失，层次缺乏。密度较厚和亮部密度大是曝光过度的表现。' },
+            { id: 123, type: 'single', content: '()指影像正常地反映了原景物的亮度关系，是对原景物客观、真实的再现。', options: ['A、 正常曝光', 'B、 正确曝光', 'C、 把握曝光', 'D、 摄影曝光'], answer: 'A',解析: '正常曝光指影像准确反映了原景物的亮度关系，是客观真实的再现。正确曝光则更强调根据表现意图获得理想的影像效果，可能不完全等同于客观再现。' },
+            { id: 124, type: 'single', content: '通常认为曝光时间()就会消灭互易律失效。', options: ['A、 在1秒至1/1000秒之间', 'B、 快于1秒', 'C、 慢于“000秒', 'D、 慢于1秒或快于“000”秒'], answer: 'D',解析: '互易律（倒易律）指光圈和快门的不同组合可获得相同曝光量。但当曝光时间过慢（长于1秒）或过快（短于1/1000秒）时，这一规律失效，需要进行曝光补偿。' },
+            { id: 125, type: 'single', content: '摄影光源的光位种类:顺光照明、()、逆光照明。', options: ['A、 太阳光照明', 'B、 人工光照明', 'C、 灯光照明', 'D、 侧光照明'], answer: 'D',解析: '光位是指光源相对于被摄体和相机的位置，主要分为顺光、侧光和逆光三大类，其他选项是按光源性质分类的。' },
+            { id: 126, type: 'single', content: '独立式测光表既是照度测光表，又是亮度测光表，因此既可以测量照度，也可以测量()。', options: ['A、 亮度', 'B、 色温', 'C、 闪光灯指数', 'D、 光比'], answer: 'A',解析: '独立式测光表通常具备两种测光模式：照度测光（测量入射光强度）和亮度测光（测量反射光亮度），因此既能测照度也能测亮度，其他参数需要专门设备测量。' },
+            { id: 127, type: 'single', content: 'TTL测光测量的是()。', options: ['A、 亮度', 'B、 色温', 'C、 闪光灯指数', 'D、 光比'], answer: 'A',解析: 'TTL（Through The Lens）测光即通过镜头测光，测量的是被摄体反射回镜头的光线亮度，是相机内置测光系统的主要工作方式。' },
+            { id: 128, type: 'single', content: '独立式测光表用来确定曝光参数的常用测量方法是().', options: ['A、 照度分析测量法', 'B、 综合照度测量法', 'C、 机位亮度测量法', 'D、 区域测量法'], answer: 'B',解析: '综合照度测量法是独立式测光表确定曝光参数的常用方法，它测量被摄体接受的平均照度，能获得较为均衡的曝光，适合大多数拍摄场景。' },
+            { id: 129, type: 'single', content: '独立式测光表用测量亮度方式决定物体光比的测量方法是 ()。', options: ['A、 机位亮度测量法', 'B、 利用点测光模式，测量主光和辅光的亮度', 'C、 测量景物的平均亮度', 'D、 利用点测光模式测量灰板'], answer: 'B',解析: '光比是主光和辅光的亮度比值，使用点测光模式分别测量主光和辅光照射下的亮度，即可计算出光比，这是准确测量光比的方法。' },
+            { id: 130, type: 'single', content: '独立式测光表测量闪光的方法有()。', options: ['A、 连线测量', 'B、 连线与非连线测量', 'C、 TTL测量', 'D、 E-TTL 测量'], answer: 'B',解析: '独立式测光表测量闪光有两种方式：连线测量（通过同步线与闪光灯连接）和非连线测量（使用光敏传感器感应闪光），TTL和E-TTL是相机内置的闪光测光方式。' },
+            { id: 131, type: 'single', content: '机内测光表测量闪光的方法有多种，其中最好的测量方法是()。', options: ['A、 TTL', 'B、 TTL-OTF', 'C、 E-TTL', 'D、 以上均对'], answer: 'C',解析: 'E-TTL（Evaluative Through The Lens）是佳能开发的高级闪光测光系统，相比传统TTL和TTL-OTF，能更智能地评估场景，提供更准确的闪光曝光，是目前较先进的闪光测光方法。' },
+            { id: 132, type: 'single', content: '独立式测光表在影室闪光灯下确定曝光参数与光比的理想方法是()。', options: ['A、 综合照度测量法', 'B、 综合照度测量法与照度分析测量法', 'C、 亮度分析测量法', 'D、 机位亮度测量法'], answer: 'B',解析: '在影室闪光灯下，综合照度测量法可确定基础曝光参数，照度分析测量法（分别测量主光、辅光等）可计算光比，两者结合能获得理想的布光效果和曝光参数。' },
+            { id: 133, type: 'single', content: '感光材料的保护层具有()了或产生摩擦灰雾的作用。', options: ['A、 有良好的耐光、耐寒、耐热等性能', 'B、 膨胀和收缩率小，不易变形', 'C、 防止胶卷在冲洗中产生过度弯曲', 'D、 防止乳剂层被划伤'], answer: 'D',解析: '感光材料的保护层主要功能是保护乳剂层免受物理损伤（如划伤），同时减少因摩擦产生的灰雾，确保影像质量不受影响。' },
+            { id: 134, type: 'single', content: '()胶片一般应保存在0℃ 以下。', options: ['A、 中速黑白负片', 'B、 高速黑白负片', 'C、 专业型彩色负片或反转片', 'D、 一般彩色感光材料'], answer: 'C',解析: '专业型彩色胶片对温度敏感，长期保存需要0℃以下的环境，以防止色彩平衡和感光性能发生变化，普通胶片对保存温度要求较低。' },
+            { id: 135, type: 'single', content: '低于20℃为()的保存温度。', options: ['A、 黑白相纸、彩色相纸', 'B、 彩色相纸、光而相纸', 'C、 彩色相纸', 'D、 黑白相纸'], answer: 'D',解析: '黑白相纸的推荐保存温度通常低于20℃，而彩色相纸需要更低的保存温度（通常10℃以下），以保持其感光性能稳定。' },
+            { id: 136, type: 'single', content: '光源投射在被摄景物上的光线[]即为光源的光照度。', options: ['A、 衍射性质', 'B、 温度和角度', 'C、 反射方向', 'D、 强弱'], answer: 'D',解析: '光照度是描述光源照射到物体表面的光线强弱的物理量，直接与光线的强弱相关，是衡量照明强度的重要指标。' },
+            { id: 137, type: 'single', content: '黄种人的肤色、水泥地面、草地等的反光率很接近()', options: ['A、 35%灰', 'B、 18%中灰', 'C、 10%灰', 'D、 50%灰'], answer: 'B',解析: '18%中灰是摄影中的标准反光率，许多自然物体的平均反光率接近这一数值，因此成为测光的重要参考，确保曝光准确。' },
+            { id: 138, type: 'single', content: '摄影曝光指按动照相机()使胶片感光。', options: ['A、 光圈、快门', 'B、 闪光灯', 'C、 闪光灯、光圈', 'D、 快门'], answer: 'D',解析: '曝光的本质是通过快门的开启让光线照射胶片（或传感器）使其感光，光圈和闪光灯是控制进光量的手段，而曝光动作由快门触发。' },
+            { id: 139, type: 'single', content: '曝光组合参数是指舶摄时使用的()与快门时间的组合。', options: ['A、 光圈系数', 'B、 镜头有效口径大小', 'C、 焦距', 'D、 景深'], answer: 'A',解析: '曝光组合由光圈系数和快门速度组成，两者共同决定曝光量，是摄影中控制曝光的基本参数，直接影响影像的亮度和清晰度。' },
+            { id: 140, type: 'single', content: '景物或影像的明暗比照差异称为()', options: ['A、 密度', 'B、 比照度', 'C、 宽密度', 'D、 反差'], answer: 'D',解析: '反差指景物或影像中明暗区域的对比差异，是表现影像层次和质感的重要因素，与密度（感光材料的黑化程度）不同。' },
+            { id: 141, type: 'single', content: '以下现象中，()是曝光缺乏底片的主要表现。', options: ['A、 底片密度较厚', 'B、 彤像没有层次', 'C、 底片看上去完全透亮，失去层次', 'D、 对应于景物亮部的密度往往很大'], answer: 'C',解析: '曝光不足导致底片上的卤化银还原不充分，表现为底片整体透亮，暗部细节丢失，层次缺乏。密度厚和亮部密度大是曝光过度的特征。' },
+            { id: 142, type: 'single', content: '()指影像正常地反映了原景物的亮度关系，是对原景物客观、真实的再现。', options: ['A、 正常曝光', 'B、 正确曝光', 'C、 把握曝光', 'D、 摄影曝光'], answer: 'A',解析: '正常曝光强调客观再现原景物的亮度关系，而正确曝光更侧重于根据表现意图获得理想效果，可能对原景物的亮度关系进行主观调整。' },
+            { id: 143, type: 'single', content: '防止背景光溢出的方法是使用()', options: ['A、 白色反光板', 'B、 白色柔光板', 'C、 黑色吸光板', 'D、 银色反光板'], answer: 'C',解析: '黑色吸光板能吸收多余的背景光，防止其溢出到主体上，避免主体产生不必要的光斑或提高背景与主体的对比度，其他反光板会反射光线，可能加剧光溢出。' },
+            { id: 144, type: 'single', content: 'CMNK 颜色模型是基于()的色模型', options: ['A、 加色混合', 'B、 成色混合', 'C、 红、绿、蓝三原色', 'D、 色相、饱和度、明度'], answer: 'B',解析: 'CMYK颜色模型（青、品红、黄、黑）基于减色混合原理，用于印刷等颜料色彩系统，通过吸收光线来呈现颜色，与RGB的加色混合不同。' },
+            { id: 145, type: 'single', content: '下列选项中，不属于影像质量的选项是()', options: ['A、 饱和度过高', 'B、 光比过大', 'C、 使用 TIEF 格式', 'D、 清晰度低'], answer: 'C',解析: 'TIFF格式是一种高质量的无损图像格式，与影像质量本身无关，它是保存图像的方式。其他选项（饱和度、光比、清晰度）均直接描述影像的质量特征。' },
+            { id: 146, type: 'single', content: '不属于大尺寸柔光设备主要特点的是()', options: ['A、 发光面积大', 'B、 照射均匀', 'C、 光线柔和', 'D、 光线强烈'], answer: 'D',解析: '大尺寸柔光设备的特点是发光面积大，光线经过扩散后变得柔和、均匀，适合表现细腻的质感和层次，光线强烈是硬光设备的特点。' },
+            { id: 147, type: 'single', content: '自定义白平衡时，拍摄的灰卡需要占到画面的()', options: ['A、 0.5', 'B、 0.7', 'C、 0.85', 'D、 1'], answer: 'D',解析: '自定义白平衡时，灰卡应充满整个画面，确保相机能准确识别中性灰，从而正确校准白平衡，避免其他颜色干扰，获得准确的色彩还原。' },
+            { id: 148, type: 'single', content: '毕业纪念人像服装的选择，下列选项中相对合适的是()', options: ['A、 学士服', 'B、 旗袍', 'C、 休闲T恤', 'D、 古装'], answer: 'A',解析: '毕业纪念人像应体现毕业这一特定场合，学士服是毕业仪式的标志性服装，最适合用于毕业纪念照，其他服装与毕业主题关联不大。' },
+            { id: 149, type: 'single', content: '不属于大尺寸柔光设备主要特点的是()', options: ['A、 发光面积大', 'B、 照射均匀', 'C、 光线柔和', 'D、 光线强烈'], answer: 'D',解析: '大尺寸柔光设备通过扩散光线使照明变得柔和、均匀，发光面积大是其特征，而光线强烈是聚光设备的特点，不属于柔光设备的特性。' },
+            { id: 150, type: 'single', content: '以下情况中，不适合使用的素材照片是()', options: ['A、 曝光准确', 'B、 像素过度', 'C、 色彩鲜艳', 'D、 主体突出'], answer: 'B',解析: '像素过度通常指像素过低导致图像模糊，或像素过高导致文件过大而无必要，这样的素材照片不适合使用。其他选项都是优质素材的特征。' },
+            { id: 151, type: 'single', content: '拍摄一朵玫瑰花开花的延时视频，感光度应设置为()', options: ['A、 100', 'B、 200', 'C、 400', 'D、 800'], answer: 'A',解析: '延时摄影通常在固定机位、光线稳定的环境下进行，应选择最低感光度（如ISO 100）以获得最清晰、噪点最少的画面质量，保证视频的细腻度。' },
+            { id: 152, type: 'single', content: '画面清晰度不足，可以调节()', options: ['A、 饱和度', 'B、 锐度', 'C、 对比度', 'D、 曝光度'], answer: 'B',解析: '锐度直接影响画面的清晰度和细节表现，调节锐度可以增强图像中边缘的对比度，使画面看起来更清晰。饱和度影响色彩鲜艳度，对比度影响明暗对比，曝光度影响亮度。' },
+            { id: 153, type: 'single', content: '使用旋转台拍摄毛绒小狗玩具产品动图时，应把产品()', options: ['A、 平放', 'B、 竖放', 'C、 斜放', 'D、 悬挂'], answer: 'A',解析: '平放产品在旋转台上能保证旋转过程的稳定性，使动图画面平稳，展示产品的全貌和细节，其他放置方式可能导致旋转不稳或展示不全面。' },
+            { id: 154, type: 'single', content: '在编辑软件中图片序列有75张，并设置帧速率为25帧/秒，生成的延时视频时长是()', options: ['A、 20秒', 'B、 15秒', 'C、 6秒', 'D、 3秒'], answer: 'D',解析: '视频时长=图片总数÷帧速率，即75÷25=3秒。帧速率表示每秒播放的帧数，是计算视频时长的基本公式。' },
+            { id: 155, type: 'single', content: '拍摄旋转动图时，让背景拍出纯白色，对展台的基本要求是()', options: ['A、 用白色的展台', 'B、 在展台上放白布', 'C、 在白色展台上架设闪光灯', 'D、 在展台上放白纸'], answer: 'C',解析: '要获得纯白色背景，需要对背景进行充分照明（如使用闪光灯），使背景亮度超过主体，同时使用白色展台作为基础，单纯的白色展台或布料如果没有足够光线照射，难以呈现纯白色。' },
+            { id: 156, type: 'single', content: '风光摄影更适合使用以下哪种分类方法()', options: ['A、 人名分类', 'B、 地名分类', 'C、 色彩分类', 'D、 设备分类'], answer: 'B',解析: '风光摄影的核心是表现特定地点的自然景观，按地名分类能直观反映拍摄地点，便于查找和整理，符合风光摄影的特点和需求。' },
+            { id: 157, type: 'single', content: '拍摄延时视频需要用到的基本设备是()', options: ['A、 测光表', 'B、 快门线', 'C、 ND滤镜', 'D、 遮光罩'], answer: 'B',解析: '延时视频需要按固定时间间隔拍摄一系列照片，快门线（尤其是定时快门线）能精确控制拍摄间隔和次数，是延时摄影的基本设备，其他设备根据情况选用。' },
+            { id: 158, type: 'single', content: '不属于构图元素的是()', options: ['A、 线条', 'B、 色彩', 'C、 形状', 'D、 尺寸'], answer: 'D',解析: '构图元素包括线条、色彩、形状、光影、空间等，尺寸是物体的实际大小，不是构图中需要考虑的视觉元素，构图关注的是这些元素在画面中的组织方式。' },
+            { id: 159, type: 'single', content: '摄影构图指的是画面的构成与()', options: ['A、 创造的意图', 'B、 组合的意图', 'C、 取舍的意图', 'D、 表达的意图'], answer: 'B',解析: '摄影构图是指在画面中对景物元素进行组织、安排和组合的过程，目的是形成有意义的视觉结构，表达特定的主题和情感，核心是元素的组合方式。' },
+            { id: 160, type: 'single', content: '拍摄日出的延时视频，感光度应设置为()', options: ['A、 800', 'B、 400', 'C、 200', 'D、 100'], answer: 'D',解析: '日出场景光线变化大但整体亮度逐渐提高，延时摄影需要长时间拍摄，设置最低感光度（ISO 100）可获得最佳画质，减少噪点，保证画面细腻。' },
+            { id: 161, type: 'single', content: '适合服装模特棚拍的镜头焦距是()', options: ['A、 广角', 'B、 标准', 'C、 中焦', 'D、 超长焦'], answer: 'C',解析: '中焦镜头（如85mm-135mm）视角适中，透视变形小，能真实还原服装的比例和线条，同时压缩背景，突出主体，是服装模特棚拍的理想选择。' },
+            { id: 162, type: 'single', content: '堪地派摄影的代表人物是().', options: ['A、 斯泰肯', 'B、 海因', 'C、 雷兰德', 'D、 萨罗蒙'], answer: 'D',解析: '堪地派摄影（Candid Photography）强调抓拍自然瞬间，奥古斯特·萨罗蒙（August Sander）是该流派的代表人物之一，以纪实性的人物肖像闻名。' },
+            { id: 163, type: 'single', content: '()是一个美丽的词汇,包括了世界所有的颜色。', options: ['A、 色彩', 'B、 饱和度', 'C、 素描', 'D、 光源'], answer: 'A',解析: '色彩是对各种可见光的视觉感知，涵盖了世界上所有的颜色，饱和度是描述色彩鲜艳程度的属性，素描主要与黑白灰相关，光源是产生色彩的条件。' },
+            { id: 164, type: 'single', content: '拍摄夜间篮球馆内球员比赛时,由于室内光线不好,应该选择以下哪种组合()', options: ['A、 大光圈、长焦距、慢速快门,IS0200。', 'B、 大光圈、长焦距、高速快门,ISO200。', 'C、 大光圈、长焦距、慢速快门.ISO600。', 'D、 大光圈、长焦距、高速快门,IS0600。'], answer: 'D',解析: '夜间篮球馆光线较暗，需大光圈增加进光量；拍摄运动的球员需高速快门凝固动作；长焦距适合远距离拍摄；高ISO（如600）能提高感光度，适应低光环境，综合这些因素应选择D。' },
+            { id: 165, type: 'single', content: '在进行室内灯光房的冷调人像拍摄时,可以使用()方法制造冷调效果。', options: ['A、 调低灯光照度', 'B、 将白色滤光纸放置于灯前', 'C、 调高灯光照度', 'D、 将蓝色滤色片放置于灯前'], answer: 'D',解析: '蓝色滤色片能使光线带上蓝色调，营造冷调效果，这是直接改变光线色温的有效方法。调整照度只改变亮度，白色滤光纸不改变色温，无法产生冷调效果。' },
+            { id: 166, type: 'single', content: '将()涂在透明的软片片基上制成了胶卷。', options: ['A、 火棉胶', 'B、 感光乳剂', 'C、 软片片基', 'D、 胶片'], answer: 'B',解析: '胶卷的结构是在透明的片基上涂覆感光乳剂（含有卤化银等感光物质），感光乳剂是实现感光成像的关键层，其他选项不是胶卷的感光成分。' },
+            { id: 167, type: 'single', content: '夸大前景,要用()镜头。', options: ['A、 标准', 'B、 中焦', 'C、 中长焦', 'D、 超广角'], answer: 'D',解析: '超广角镜头具有强烈的透视变形效果，能夸大前景物体，缩小背景，增强画面的空间纵深感，适合表现前景突出的构图效果。' },
+            { id: 168, type: 'single', content: '拍摄中间调人像时,光线采用()。', options: ['A、 硬光', 'B、 柔光', 'C、 AB 都不对', 'D、 AB都对'], answer: 'D',解析: '中间调人像的光线处理灵活，既可以用硬光通过控制光比获得丰富层次，也可以用柔光获得柔和过渡的影调，两种光线都能表现中间调，关键在于光比的控制。' },
+            { id: 169, type: 'single', content: '主题人像摄影的时尚性不表现在()', options: ['A、 主题人像摄影的时尚要追求的是一个“美”字。', 'B、 主题人像摄影要在拍摄时讲求画面构图的新奇,要用一种时尚的眼光去经营画面。', 'C、 在主题人像摄影的画面中,要出现能引领当今社会流行的时尚色彩。', 'D、 表现被摄者的个性'], answer: 'D',解析: '表现被摄者的个性是人像摄影的普遍要求，并非时尚性的特有表现。时尚性主要体现在审美追求、构图创新和流行元素的运用上。' },
+            { id: 170, type: 'single', content: '消费心理学研究经常使用的方法有:观察法、()', options: ['A、 分析法和调查法', 'B、 实验法和调查法', 'C、 分析法和取样法', 'D、 实验法和取样法'], answer: 'B',解析: '消费心理学常用的研究方法包括观察法（观察消费者行为）、实验法（控制变量研究）和调查法（通过问卷等收集数据），这些方法能有效研究消费者的心理和行为。' },
+            { id: 171, type: 'single', content: '()季满地的落叶,金黄的色彩是每年永恒的拍摄主题', options: ['A、 春', 'B、 夏', 'C、 秋', 'D、 冬'], answer: 'C',解析: '秋季是树叶变色并掉落的季节，金黄的落叶是秋季的典型景观，成为摄影中永恒的秋季主题，其他季节没有这一特征。' },
+            { id: 172, type: 'single', content: '拍摄时要使天空更蓝应()拍。', options: ['A、 侧光', 'B、 逆光', 'C、 前侧光', 'D、 顺光'], answer: 'A',解析: '侧光拍摄时，天空受光均匀且亮度适中，能较好地表现天空的蓝色；顺光拍摄天空容易过亮，蓝色饱和度降低；逆光拍摄天空容易出现光晕或过曝，不利于表现蓝色。' },
+            { id: 173, type: 'single', content: '在拍摄特写人像时,不常用的拍摄技巧有()。', options: ['A、 提高感光度', 'B、 画面简洁', 'C、 矫正面部缺陷', 'D、 选择合适的镜头'], answer: 'A',解析: '特写人像需要清晰的细节表现，应尽量使用低感光度以保证画质，提高感光度会增加噪点，影响画质，因此不常用。其他选项都是特写人像的常用技巧。' },
+            { id: 174, type: 'single', content: '产品照草图的基本内容包括()三项内容', options: ['A、 相机位置、灯光位置、反光板角度', 'B、 物品怎样摆放、文字部分加在什么地方、如何表现', 'C、 相机位置、灯光位置和物品怎样摆放', 'D、 物品怎样摆放、相机位置和灯光位置'], answer: 'B',解析: '产品照草图主要规划产品的摆放方式、文字信息的位置以及整体表现风格，这三者直接关系到产品的展示效果和信息传达，是草图的核心内容。' },
+            { id: 175, type: 'single', content: '视场角为()的镜头属于标准镜头。', options: ['A、 80度以上', 'B、 40度-60度', 'C、 90度', 'D、 70度一95度'], answer: 'B',解析: '标准镜头的视场角接近人眼的自然视角，约为40-60度，能产生自然的透视效果，符合人眼的视觉习惯，广泛用于各种摄影场景。' },
+            { id: 176, type: 'single', content: '下列哪种证书可以参加免费职业资格培训()', options: ['A、 再就业优惠证', 'B、 职业资格证书', 'C、 驾驶证', 'D、 技术证'], answer: 'A',解析: '再就业优惠证是针对下岗失业人员的优惠证明，持有者可享受包括免费职业资格培训在内的多项就业扶持政策，其他证书不具备这一功能。' },
+            { id: 177, type: 'single', content: '何种方向的照明有利于表现出蹲姿人物的立体形象()。', options: ['A、 前侧光', 'B、 后侧光', 'C、 硬光', 'D、 侧光'], answer: 'A',解析: '前侧光能在蹲姿人物的面部和身体上形成适度的明暗过渡，既突出了人物的立体感，又立体轮廓，又保留了丰富的细节，是表现人物立体形象的理想光线方向，侧光对比过强，后侧光容易使正面过暗。
+{id: 178, type: 'single', content: ' 主光和辅助光的光比是 ()。', options: ['A、 1:1', 'B、 2:1', 'C、 3:1', 'D、 4:1'], answer: 'C', 解析: ' 主光和辅助光的光比通常控制在 3:1 左右，这个比例能形成自然的明暗对比，突出主体的立体感，同时保证阴影部分有足够细节，1:1 太平淡，4:1 以上对比过强。' },
+{ id: 179, type: 'single', content: ' 低调人像的背景宜选择 ()。', options: ['A、 白色 ', 'B、 浅色 ', 'C、 中性色 ', 'D、 深色 '], answer: 'D', 解析: ' 低调人像以暗色调为主，深色背景能与主体的暗部协调，增强画面的沉郁氛围，突出主体的高光部分，白色或浅色背景会破坏低调效果，使画面过于明亮。' },
+{ id: 180, type: 'single', content: ' 高调人像的背景宜选择 ()。', options: ['A、 白色或浅色 ', 'B、 深色 ', 'C、 黑色 ', 'D、 红色 '], answer: 'A', 解析: ' 高调人像以亮色调为主，白色或浅色背景能营造明亮、轻快的氛围，与主体的高光部分呼应，形成和谐的高调效果，深色或黑色背景会产生强烈对比，破坏高调风格。' },
+{ id: 181, type: 'single', content: ' 拍摄人像时，() 可以消除面部瑕疵。', options: ['A、 硬光 ', 'B、 柔光 ', 'C、 侧光 ', 'D、 逆光 '], answer: 'B', 解析: ' 柔光光线柔和，过渡均匀，能减弱面部瑕疵（如皱纹、斑点）的对比度，使皮肤看起来更光滑；硬光会强化瑕疵，侧光和逆光主要影响立体感和轮廓。' },
+{ id: 182, type: 'single', content: '() 是人像摄影中最常用的光线。', options: ['A、 顺光 ', 'B、 侧光 ', 'C、 逆光 ', 'D、 顶光 '], answer: 'B', 解析: ' 侧光能在人物面部形成明暗过渡，增强立体感和层次感，同时保留足够的细节，是人像摄影中最常用的光线方向，能适应多种拍摄需求和风格。' },
+{ id: 183, type: 'single', content: '() 是指光源位于被摄者的正前方，光线均匀照亮被摄者。', options: ['A、 顺光 ', 'B、 侧光 ', 'C、 逆光 ', 'D、 顶光 '], answer: 'A', 解析: ' 顺光（正面光）的光源位于相机和被摄者之间，光线直接照射被摄者正面，照明均匀，能表现细节，但立体感较弱，适合拍摄证件照等需要清晰展现面部特征的场景。' },
+{ id: 184, type: 'single', content: '() 是指光源位于被摄者的侧后方，能勾勒出被摄者的轮廓。', options: ['A、 顺光 ', 'B、 侧光 ', 'C、 逆光 ', 'D、 顶光 '], answer: 'C', 解析: ' 逆光从被摄者后方照射，能在主体边缘形成明亮的轮廓线，将主体与背景分离，增强画面的空间感和立体感，常用于表现剪影或突出主体轮廓。' },
+{ id: 185, type: 'single', content: ' 拍摄人像时，() 可以使人物面部显得消瘦。', options: ['A、 正面拍摄 ', 'B、 侧面拍摄 ', 'C、 仰拍 ', 'D、 俯拍 '], answer: 'B', 解析: ' 侧面拍摄能突出面部的轮廓线条，压缩面部宽度，使人物显得消瘦；正面拍摄易显胖，仰拍会夸大下巴，俯拍可能使面部变形。' },
+{ id: 186, type: 'single', content: ' 拍摄人像时，() 可以使人物显得高大。', options: ['A、 正面拍摄 ', 'B、 侧面拍摄 ', 'C、 仰拍 ', 'D、 俯拍 '], answer: 'C', 解析: ' 仰拍从低处向上拍摄，利用透视原理使人物下肢显得修长，整体形象高大；俯拍会使人物显得矮小，正侧面拍摄对身高影响不大。' },
+{ id: 187, type: 'single', content: '() 焦距的镜头适合拍摄环境人像。', options: ['A、 广角 ', 'B、 标准 ', 'C、 中焦 ', 'D、 长焦 '], answer: 'A', 解析: ' 广角镜头视角大，能在拍摄人物的同时纳入更多环境元素，展现人物与环境的关系，适合环境人像；长焦镜头压缩背景，更适合特写人像。' },
+{ id: 188, type: 'single', content: '() 焦距的镜头适合拍摄人像特写。', options: ['A、 广角 ', 'B、 标准 ', 'C、 中长焦 ', 'D、 超广角 '], answer: 'C', 解析: ' 中长焦镜头（如 85-135mm）视角适中，透视变形小，能压缩背景，突出主体，同时保证人物面部比例自然，是拍摄人像特写的理想选择。' },
+{ id: 189, type: 'single', content: ' 人像摄影中，() 背景可以突出主体。', options: ['A、 复杂 ', 'B、 简洁 ', 'C、 鲜艳 ', 'D、 明暗对比强烈 '], answer: 'B', 解析: ' 简洁的背景能减少视觉干扰，使观众注意力集中在人物主体上；复杂或鲜艳的背景会分散注意力，明暗对比强烈的背景可能喧宾夺主。' },
+{ id: 190, type: 'single', content: ' 拍摄儿童人像时，相机高度应 ()。', options: ['A、 与儿童视线平齐 ', 'B、 高于儿童视线 ', 'C、 低于儿童视线 ', 'D、 任意高度 '], answer: 'A', 解析: ' 与儿童视线平齐的拍摄角度能让儿童感到平等和舒适，拍出的照片更自然亲切；过高或过低的角度可能使儿童感到压迫或不适，影响表现效果。' },
+{ id: 191, type: 'single', content: '() 是指在拍摄时，通过改变相机的位置和角度，使画面中的地平线倾斜。', options: ['A、 水平构图 ', 'B、 垂直构图 ', 'C、 倾斜构图 ', 'D、 对称构图 '], answer: 'C', 解析: ' 倾斜构图通过打破水平或垂直的平衡，营造动感和张力，常用于表现活泼、动态的场景或人物，能增加画面的视觉冲击力。' },
+{ id: 192, type: 'single', content: ' 三分法构图中，将画面分为 () 个相等的部分。', options: ['A、 2', 'B、 3', 'C、 4', 'D、 9'], answer: 'D', 解析: ' 三分法构图通过两条水平线和两条垂直线将画面分为 9 个相等的部分，形成 “井” 字格，主体通常放置在交叉点上，使构图更均衡、更具吸引力。' },
+{ id: 193, type: 'single', content: '() 构图可以使画面产生稳定、庄重的感觉。', options: ['A、 对称 ', 'B、 均衡 ', 'C、 倾斜 ', 'D、 放射 '], answer: 'A', 解析: ' 对称构图通过左右或上下对称的布局，给人稳定、庄重、和谐的感觉，常用于表现正式、严肃的主题，如建筑、集体照等。' },
+{ id: 194, type: 'single', content: '() 构图可以使画面产生动感和张力。', options: ['A、 对称 ', 'B、 均衡 ', 'C、 倾斜 ', 'D、 水平 '], answer: 'C', 解析: ' 倾斜构图打破了水平或垂直的稳定感，使画面产生动态趋势和视觉张力，适合表现运动、活力或紧张的氛围。' },
+{ id: 195, type: 'single', content: ' 在 Photoshop 中，() 工具可以快速选择颜色相近的区域。', options: ['A、 选框 ', 'B、 套索 ', 'C、 魔棒 ', 'D、 钢笔 '], answer: 'C', 解析: ' 魔棒工具根据颜色的相似度（容差）来选择区域，适合快速选择颜色相近的区域，选框工具用于选择规则形状，套索工具用于手动绘制选区，钢笔工具用于精确选择路径。' },
+{ id: 196, type: 'single', content: ' 在 Photoshop 中，() 命令可以调整图像的亮度和对比度。', options: ['A、 色阶 ', 'B、 曲线 ', 'C、 亮度 / 对比度 ', 'D、 色相 / 饱和度 '], answer: 'C', 解析: '“亮度 / 对比度” 命令是调整图像亮度和对比度的最直接工具，操作简单直观；色阶和曲线也能调整亮度对比度，但功能更复杂；色相 / 饱和度用于调整色彩属性。' },
+{ id: 197, type: 'single', content: ' 在 Photoshop 中，() 图层可以保护下方图层不被编辑。', options: ['A、 普通 ', 'B、 调整 ', 'C、 智能对象 ', 'D、 锁定 '], answer: 'D', 解析: ' 锁定图层可以限制对图层的编辑操作（如移动、绘画等），保护下方图层或当前图层的内容不被意外修改，其他图层类型没有此保护功能。' },
+{ id: 198, type: 'single', content: ' 在 Photoshop 中，() 滤镜可以使图像产生模糊效果。', options: ['A、 高斯模糊 ', 'B、 锐化 ', 'C、 浮雕 ', 'D、 液化 '], answer: 'A', 解析: ' 高斯模糊滤镜是产生模糊效果的常用工具，能使图像边缘柔和，减少细节；锐化滤镜增强清晰度，浮雕滤镜产生立体感，液化滤镜用于变形处理。' },
+{ id: 199, type: 'single', content: 'JPEG 格式的图像文件的扩展名是 ()。', options: ['A、 .psd', 'B、 .jpg', 'C、 .png', 'D、 .gif'], answer: 'B', 解析: '.jpg'（或 '.jpeg'）是 JPEG 格式图像的扩展名，广泛用于网络和摄影；'.psd' 是 Photoshop 格式，'.png' 和 '.gif' 是其他图像格式。' },
+{ id: 200, type: 'single', content: 'RAW 格式的图像文件相比 JPEG 格式，其优点是 ()。', options: ['A、 文件体积小 ', 'B、 压缩率高 ', 'C、 保留更多细节 ', 'D、 兼容性好 '], answer: 'C', 解析: 'RAW 格式是相机传感器未经处理的原始数据，保留了更多图像细节和动态范围，便于后期调整；JPEG 格式经过压缩，文件小、兼容性好，但损失了部分细节。' },
+
+// 多选题 (201-306)
+{ id: 201, type: 'multi', content: ' 摄影用光的基本要素包括 ()。', options: ['A、 光源 ', 'B、 光质 ', 'C、 光位 ', 'D、 光比 ', 'E、 光色 '], answer: ['A','B','C','D','E'], 解析: ' 摄影用光的基本要素包括光源（发光体）、光质（硬光 / 柔光）、光位（光源位置）、光比（明暗对比）和光色（色温 / 色调），这些要素共同决定了画面的光影效果和氛围。' },
+{ id: 202, type: 'multi', content: ' 常见的摄影光源有 ()。', options: ['A、 自然光 ', 'B、 闪光灯 ', 'C、 影室灯 ', 'D、 LED 灯 ', 'E、 台灯 '], answer: ['A','B','C','D','E'], 解析: ' 摄影光源包括自然光（阳光等）和各种人造光源，如闪光灯、影室灯、LED 灯，甚至普通台灯在特定情况下也可作为摄影光源使用。' },
+{ id: 203, type: 'multi', content: ' 光质可以分为 ()。', options: ['A、 硬光 ', 'B、 柔光 ', 'C、 强光 ', 'D、 弱光 ', 'E、 冷光 '], answer: ['A','B'], 解析: ' 光质主要分为硬光（光线集中，阴影明显）和柔光（光线扩散，阴影柔和），强光 / 弱光是指光的强度，冷光是指光的色温，不属于光质分类。' },
+{ id: 204, type: 'multi', content: ' 常见的光位有 ()。', options: ['A、 顺光 ', 'B、 侧光 ', 'C、 逆光 ', 'D、 顶光 ', 'E、 底光 '], answer: ['A','B','C','D','E'], 解析: ' 光位是光源相对于被摄体的位置，包括顺光、侧光、逆光、顶光（从上方照射）和底光（从下方照射）等，不同光位产生不同的光影效果。' },
+{ id: 205, type: 'multi', content: ' 影响景深的因素有 ()。', options: ['A、 光圈 ', 'B、 焦距 ', 'C、 拍摄距离 ', 'D、 快门速度 ', 'E、 感光度 '], answer: ['A','B','C'], 解析: ' 景深由光圈（光圈越小景深越大）、焦距（焦距越短景深越大）和拍摄距离（距离越远景深越大）决定，快门速度和感光度不影响景深。' },
+{ id: 206, type: 'multi', content: ' 摄影构图的基本原则有 ()。', options: ['A、 突出主体 ', 'B、 画面简洁 ', 'C、 均衡稳定 ', 'D、 多样统一 ', 'E、 黄金分割 '], answer: ['A','B','C','D'], 解析: ' 摄影构图的基本原则包括突出主体、画面简洁、均衡稳定和多样统一，黄金分割是具体的构图方法，而非基本原则。' },
+{ id: 207, type: 'multi', content: ' 常见的摄影构图方法有 ()。', options: ['A、 三分法 ', 'B、 对称构图 ', 'C、 引导线构图 ', 'D、 框架构图 ', 'E、 对比构图 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的摄影构图方法：三分法利用网格布局，对称构图追求平衡，引导线引导视线，框架构图突出主体，对比构图通过差异强调主题。' },
+{ id: 208, type: 'multi', content: ' 人像摄影中，常用的姿势有 ()。', options: ['A、 站姿 ', 'B、 坐姿 ', 'C、 蹲姿 ', 'D、 卧姿 ', 'E、 跳姿 '], answer: ['A','B','C','D','E'], 解析: ' 人像摄影的姿势多样，包括站姿、坐姿、蹲姿、卧姿和跳姿等，不同姿势能表现不同的人物状态和情感，丰富画面效果。' },
+{ id: 209, type: 'multi', content: ' 影响曝光的因素有 ()。', options: ['A、 光圈 ', 'B、 快门速度 ', 'C、 感光度 ', 'D、 光线强度 ', 'E、 被摄体反光率 '], answer: ['A','B','C','D','E'], 解析: ' 曝光由光圈、快门速度和感光度直接控制，同时受光线强度（环境光）和被摄体反光率影响，反光率高的物体需要减少曝光，反之则增加。' },
+{ id: 210, type: 'multi', content: ' 常见的摄影附件有 ()。', options: ['A、 三脚架 ', 'B、 闪光灯 ', 'C、 滤镜 ', 'D、 快门线 ', 'E、 存储卡 '], answer: ['A','B','C','D'], 解析: ' 三脚架（稳定相机）、闪光灯（补光）、滤镜（调整光线 / 色彩）、快门线（遥控拍摄）均为摄影附件；存储卡是相机存储介质，属于必备品而非附件。' },
+{ id: 211, type: 'multi', content: ' 滤镜的主要作用有 ()。', options: ['A、 调整色温 ', 'B、 减少反光 ', 'C、 增加曝光 ', 'D、 柔化画面 ', 'E、 保护镜头 '], answer: ['A','B','D','E'], 解析: ' 滤镜可调整色温（如色温镜）、减少反光（偏振镜）、柔化画面（柔光镜）、保护镜头（UV 镜），但不能增加曝光，反而可能减少进光量需要增加曝光。' },
+{ id: 212, type: 'multi', content: 'Photoshop 中，常用的选区工具包括 ()。', options: ['A、 选框工具 ', 'B、 套索工具 ', 'C、 魔棒工具 ', 'D、 钢笔工具 ', 'E、 快速选择工具 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是 Photoshop 中常用的选区工具：选框工具选规则区域，套索工具手动绘制，魔棒工具选颜色相近区域，钢笔工具做精确路径选区，快速选择工具智能选区。' },
+{ id: 213, type: 'multi', content: 'Photoshop 中，调整图像色彩的命令有 ()。', options: ['A、 色阶 ', 'B、 曲线 ', 'C、 色相 / 饱和度 ', 'D、 色彩平衡 ', 'E、 亮度 / 对比度 '], answer: ['A','B','C','D'], 解析: ' 色阶、曲线可调整色调范围影响色彩，色相 / 饱和度调整色彩属性，色彩平衡调整色彩偏向；亮度 / 对比度主要调整明暗，不直接调整色彩。' },
+{ id: 214, type: 'multi', content: ' 常见的图像文件格式有 ()。', options: ['A、 JPEG', 'B、 PNG', 'C、 GIF', 'D、 TIFF', 'E、 RAW'], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的图像格式：JPEG 压缩率高，PNG 支持透明，GIF 支持动画，TIFF 无损压缩，RAW 是原始数据格式，各有不同用途。' },
+{ id: 215, type: 'multi', content: ' 风光摄影的拍摄要点有 ()。', options: ['A、 选择合适的光线 ', 'B、 运用前景增强深度 ', 'C、 使用小光圈获得大景深 ', 'D、 选择合适的拍摄时间 ', 'E、 突出主体 '], answer: ['A','B','C','D','E'], 解析: ' 风光摄影需注意光线（如黄金时段）、前景运用（增强空间感）、小光圈（保证前后清晰）、拍摄时间（光线最佳时段）和突出主体（明确主题），这些都是关键要点。' },
+{ id: 216, type: 'multi', content: ' 产品摄影的布光原则有 ()。', options: ['A、 突出产品质感 ', 'B、 展现产品细节 ', 'C、 避免反光 ', 'D、 背景简洁 ', 'E、 光线均匀 '], answer: ['A','B','C','D','E'], 解析: ' 产品摄影布光需突出质感（如金属的光泽、布料的纹理）、展现细节（清晰的结构）、避免不必要的反光、保持背景简洁不干扰主体，同时保证光线均匀或按需求布光。' },
+{ id: 217, type: 'multi', content: ' 儿童摄影的拍摄技巧有 ()。', options: ['A、 耐心引导 ', 'B、 抓拍瞬间 ', 'C、 与儿童平视 ', 'D、 使用鲜艳色彩 ', 'E、 快速拍摄 '], answer: ['A','B','C','D','E'], 解析: ' 儿童摄影需要耐心引导使其放松，抓拍自然瞬间，采用平视角度增强亲切感，鲜艳色彩吸引儿童注意力，同时因儿童好动需快速拍摄捕捉画面。' },
+{ id: 218, type: 'multi', content: ' 夜景摄影的注意事项有 ()。', options: ['A、 使用三脚架 ', 'B、 手动对焦 ', 'C、 小光圈大景深 ', 'D、 低感光度 ', 'E、 长时间曝光 '], answer: ['A','B','C','D','E'], 解析: ' 夜景光线暗，需三脚架稳定相机，手动对焦保证清晰，小光圈获得大景深和星芒效果，低感光度减少噪点，长时间曝光捕捉足够光线，这些都是夜景摄影的重要注意事项。' },
+{ id: 219, type: 'multi', content: ' 体育摄影的关键要素有 ()。', options: ['A、 高速快门 ', 'B、 连续对焦 ', 'C、 长焦镜头 ', 'D、 大光圈 ', 'E、 预判动作 '], answer: ['A','B','C','D','E'], 解析: ' 体育摄影需高速快门凝固动作，连续对焦追踪运动主体，长焦镜头远距离拍摄，大光圈保证进光量和浅景深，同时需预判运动员动作提前准备拍摄。' },
+{ id: 220, type: 'multi', content: ' 黑白摄影的魅力在于 ()。', options: ['A、 简化画面 ', 'B、 突出光影 ', 'C、 强调质感 ', 'D、 永恒经典 ', 'E、 专注情感 '], answer: ['A','B','C','D','E'], 解析: ' 黑白摄影去除色彩干扰，简化画面；突出光影对比和层次；强调物体的质感和纹理；具有经典永恒的视觉效果；能更专注于表达情感和主题。' },
+{ id: 221, type: 'multi', content: ' 摄影的艺术特性包括 ()。', options: ['A、 瞬间性 ', 'B、 纪实性 ', 'C、 艺术性 ', 'D、 科技性 ', 'E、 创造性 '], answer: ['A','B','C','D','E'], 解析: ' 摄影具有瞬间性（捕捉瞬间）、纪实性（记录真实）、艺术性（审美表达）、科技性（依赖设备技术）和创造性（主观创作）等多重艺术特性。' },
+{ id: 222, type: 'multi', content: ' 常见的摄影流派有 ()。', options: ['A、 纪实摄影 ', 'B、 艺术摄影 ', 'C、 商业摄影 ', 'D、 新闻摄影 ', 'E、 街头摄影 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的摄影流派：纪实摄影记录真实，艺术摄影注重审美表达，商业摄影服务于商业需求，新闻摄影传递新闻信息，街头摄影捕捉街头瞬间。' },
+{ id: 223, type: 'multi', content: ' 镜头的主要参数有 ()。', options: ['A、 焦距 ', 'B、 最大光圈 ', 'C、 视角 ', 'D、 对焦距离 ', 'E、 滤镜尺寸 '], answer: ['A','B','C','D','E'], 解析: ' 镜头的主要参数包括焦距（决定视角和放大倍率）、最大光圈（进光能力）、视角（拍摄范围）、对焦距离（最近对焦距离）和滤镜尺寸（适用滤镜规格）。' },
+{ id: 224, type: 'multi', content: ' 相机的主要部件有 ()。', options: ['A、 镜头 ', 'B、 机身 ', 'C、 感光元件 ', 'D、 快门 ', 'E、 取景器 '], answer: ['A','B','C','D','E'], 解析: ' 相机的主要部件包括镜头（成像）、机身（承载部件）、感光元件（记录影像）、快门（控制曝光时间）和取景器（观察构图），这些部件共同完成摄影功能。' },
+{ id: 225, type: 'multi', content: ' 提高摄影作品质量的方法有 ()。', options: ['A、 学习构图技巧 ', 'B、 掌握用光方法 ', 'C、 熟悉设备操作 ', 'D、 培养审美能力 ', 'E、 多拍多练 '], answer: ['A','B','C','D','E'], 解析: ' 提高摄影作品质量需要学习构图技巧、掌握用光方法、熟悉设备操作、培养审美能力，同时通过多拍多练积累经验，不断提升拍摄水平。' },
+{ id: 226, type: 'multi', content: ' 适合拍摄高调人像的光线有 ()。', options: ['A、 顺光 ', 'B、 柔光 ', 'C、 散射光 ', 'D、 硬光 ', 'E、 逆光 '], answer: ['A','B','C'], 解析: ' 高调人像需要明亮、柔和的光线，顺光照明均匀，柔光和散射光过渡柔和，适合表现高调效果；硬光会产生强烈阴影，逆光易使主体过暗，不适合高调人像。' },
+{ id: 227, type: 'multi', content: ' 适合拍摄低调人像的光线有 ()。', options: ['A、 侧光 ', 'B、 逆光 ', 'C、 硬光 ', 'D、 柔光 ', 'E、 顶光 '], answer: ['A','B','C'], 解析: ' 低调人像需要暗调为主，侧光产生明暗对比，逆光勾勒轮廓，硬光强化阴影，这些光线能营造低调的氛围和质感；柔光和顶光照明较均匀，不易形成低调效果。' },
+{ id: 228, type: 'multi', content: 'Photoshop 中，图层的类型有 ()。', options: ['A、 普通图层 ', 'B、 调整图层 ', 'C、 填充图层 ', 'D、 形状图层 ', 'E、 文字图层 '], answer: ['A','B','C','D','E'], 解析: 'Photoshop 中的图层类型包括普通图层（基础图层）、调整图层（调整色彩等）、填充图层（填充颜色 / 图案）、形状图层（矢量图形）和文字图层（文字内容）。' },
+{ id: 229, type: 'multi', content: ' 摄影中，常用的白平衡模式有 ()。', options: ['A、 自动白平衡 ', 'B、 日光白平衡 ', 'C、 阴天白平衡 ', 'D、 钨丝灯白平衡 ', 'E、 闪光灯白平衡 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的白平衡模式：自动白平衡自动适应光线，日光、阴天、钨丝灯、闪光灯模式分别对应不同光源的色温，确保色彩还原准确。' },
+{ id: 230, type: 'multi', content: ' 全景摄影的拍摄方法有 ()。', options: ['A、 水平全景 ', 'B、 垂直全景 ', 'C、 360 度全景 ', 'D、 矩阵全景 ', 'E、 手持全景 '], answer: ['A','B','C','D','E'], 解析: ' 全景摄影包括水平全景（左右拍摄拼接）、垂直全景（上下拍摄拼接）、360 度全景（全方位拍摄）、矩阵全景（多排多列拍摄），可使用三脚架或手持拍摄。' },
+{ id: 231, type: 'multi', content: ' 微距摄影的注意事项有 ()。', options: ['A、 使用三脚架 ', 'B、 手动对焦 ', 'C、 小光圈 ', 'D、 近距离拍摄 ', 'E、 补光 '], answer: ['A','B','C','D','E'], 解析: ' 微距摄影需三脚架稳定（景深极浅），手动对焦保证精确对焦，小光圈增加景深，近距离拍摄（靠近被摄体），同时因距离近易遮挡光线需补光。' },
+{ id: 232, type: 'multi', content: ' 影响色彩还原的因素有 ()。', options: ['A、 光源色温 ', 'B、 白平衡设置 ', 'C、 镜头质量 ', 'D、 感光元件 ', 'E、 后期处理 '], answer: ['A','B','C','D','E'], 解析: ' 光源色温与白平衡匹配度直接影响色彩，镜头和感光元件的色彩还原能力不同，后期处理也会改变色彩表现，这些因素共同影响最终的色彩还原效果。' },
+{ id: 233, type: 'multi', content: ' 人像摄影中，背景的选择应考虑 ()。', options: ['A、 简洁不杂乱 ', 'B、 与主体协调 ', 'C、 避免强光 ', 'D、 色彩搭配 ', 'E、 虚化程度 '], answer: ['A','B','C','D','E'], 解析: ' 人像背景选择需简洁不干扰主体，与主体风格协调，避免强光产生光斑，色彩搭配和谐，同时可通过光圈控制虚化程度突出主体。' },
+{ id: 234, type: 'multi', content: ' 常见的摄影构图元素有 ()。', options: ['A、 线条 ', 'B、 形状 ', 'C、 色彩 ', 'D、 光影 ', 'E、 空间 '], answer: ['A','B','C','D','E'], 解析: ' 摄影构图元素包括线条（引导视线）、形状（物体轮廓）、色彩（视觉感受）、光影（明暗对比）和空间（前后关系），这些元素的组织构成画面。' },
+{ id: 235, type: 'multi', content: ' 新闻摄影的特点有 ()。', options: ['A、 真实性 ', 'B、 时效性 ', 'C、 客观性 ', 'D、 形象性 ', 'E、 新闻性 '], answer: ['A','B','C','D','E'], 解析: ' 新闻摄影具有真实性（记录真实）、时效性（及时报道）、客观性（客观呈现）、形象性（视觉表达）和新闻性（具有新闻价值）等特点。' },
+{ id: 236, type: 'multi', content: ' 商业摄影的类别包括 ()。', options: ['A、 产品摄影 ', 'B、 人像摄影 ', 'C、 广告摄影 ', 'D、 美食摄影 ', 'E、 建筑摄影 '], answer: ['A','B','C','D','E'], 解析: ' 商业摄影服务于商业目的，包括产品、人像、广告、美食、建筑等多个类别，用于宣传、推广等商业活动。' },
+{ id: 237, type: 'multi', content: 'RAW 格式文件的处理软件有 ()。', options: ['A、 Photoshop', 'B、 Lightroom', 'C、 Capture One', 'D、 相机厂商专用软件 ', 'E、 美图秀秀 '], answer: ['A','B','C','D'], 解析: 'Photoshop（带 Camera Raw）、Lightroom、Capture One 和相机厂商专用软件（如佳能 DPP）均能处理 RAW 格式；美图秀秀主要处理 JPEG 等格式，对 RAW 支持有限。' },
+{ id: 238, type: 'multi', content: ' 摄影中，常用的补光工具有 ()。', options: ['A、 闪光灯 ', 'B、 反光板 ', 'C、 柔光箱 ', 'D、 LED 补光灯 ', 'E、 反光伞 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常用的补光工具：闪光灯提供强补光，反光板反射环境光，柔光箱柔化闪光，LED 补光灯提供持续补光，反光伞扩散光线，各有不同用途。' },
+{ id: 239, type: 'multi', content: ' 影响快门速度的因素有 ()。', options: ['A、 被摄体运动速度 ', 'B、 光线强度 ', 'C、 想要的动感效果 ', 'D、 焦距 ', 'E、 手持稳定性 '], answer: ['A','B','C','D','E'], 解析: ' 被摄体运动快需高速快门，光线暗需慢快门，想要动感模糊需慢快门，长焦镜头需更快快门防手抖，手持拍摄需考虑安全快门，这些都影响快门速度选择。' },
+{ id: 240, type: 'multi', content: ' 风光摄影中，常用的滤镜有 ()。', options: ['A、 UV 镜 ', 'B、 偏振镜 ', 'C、 渐变灰镜 ', 'D、 中灰密度镜 ', 'E、 柔光镜 '], answer: ['A','B','C','D'], 解析: ' 风光摄影常用 UV 镜保护镜头，偏振镜增强色彩和消除反光，渐变灰镜平衡天空与地面亮度，中灰密度镜延长曝光时间；柔光镜较少用于风光摄影，会降低清晰度。' },
+{ id: 241, type: 'multi', content: ' 人像摄影中，常用的景别有 ()。', options: ['A、 特写 ', 'B、 近景 ', 'C、 中景 ', 'D、 远景 ', 'E、 全景 '], answer: ['A','B','C','D','E'], 解析: ' 人像摄影根据表现需求使用不同景别：特写表现细节，近景突出面部，中景表现半身，远景和全景展现人物与环境的关系，丰富人像作品的多样性。' },
+{ id: 242, type: 'multi', content: ' 摄影中，常用的曝光模式有 ()。', options: ['A、 程序自动曝光（P）', 'B、 光圈优先（A/Av）', 'C、 快门优先（S/Tv）', 'D、 手动曝光（M）', 'E、 自动曝光（Auto）'], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的曝光模式：程序自动由相机选光圈快门，光圈优先手动设光圈，快门优先手动设快门，手动完全手动设置，自动模式完全由相机控制。' },
+{ id: 243, type: 'multi', content: ' 黑白摄影中，常用的滤镜有 ()。', options: ['A、 黄色滤镜 ', 'B、 橙色滤镜 ', 'C、 红色滤镜 ', 'D、 绿色滤镜 ', 'E、 蓝色滤镜 '], answer: ['A','B','C','D','E'], 解析: ' 黑白摄影滤镜通过吸收特定色光改变景物在黑白影像中的亮度：黄镜暗化蓝天，橙镜更强，红镜最大，绿镜提亮绿叶，蓝镜暗化红色物体。' },
+{ id: 244, type: 'multi', content: ' 产品摄影中，常用的背景有 ()。', options: ['A、 白色背景 ', 'B、 黑色背景 ', 'C、 灰色背景 ', 'D、 木质背景 ', 'E、 布料背景 '], answer: ['A','B','C','D','E'], 解析: ' 产品摄影根据产品特性和风格选择背景：白色简洁，黑色突出质感，灰色中性，木质自然，布料柔和，不同背景能衬托出产品的不同特点。' },
+{ id: 245, type: 'multi', content: ' 影响照片清晰度的因素有 ()。', options: ['A、 对焦准确性 ', 'B、 快门速度 ', 'C、 镜头质量 ', 'D、 感光度 ', 'E、 相机稳定性 '], answer: ['A','B','C','D','E'], 解析: ' 对焦不准直接影响清晰度，快门过慢易因抖动模糊，镜头质量影响解析力，高感光度增加噪点降低清晰度，相机不稳定（无三脚架）易导致模糊。' },
+{ id: 246, type: 'multi', content: ' 儿童摄影中，常用的道具有 ()。', options: ['A、 玩具 ', 'B、 气球 ', 'C、 书本 ', 'D、 玩偶 ', 'E、 鲜花 '], answer: ['A','B','C','D','E'], 解析: ' 这些道具都常用于儿童摄影：玩具和玩偶能吸引儿童注意力，气球和鲜花增添画面色彩和活力，书本可营造安静氛围，帮助儿童放松并丰富画面内容。' },
+{ id: 247, type: 'multi', content: ' 夜景摄影中，常见的拍摄题材有 ()。', options: ['A、 城市夜景 ', 'B、 星空 ', 'C、 夜景人像 ', 'D、 灯光轨迹 ', 'E、 月亮 '], answer: ['A','B','C','D','E'], 解析: ' 夜景摄影题材丰富，包括城市夜景（灯光建筑）、星空（银河星星）、夜景人像（人物与夜景结合）、灯光轨迹（车流光轨）、月亮（单独或与景物结合）等。' },
+{ id: 248, type: 'multi', content: ' 体育摄影中，常见的拍摄题材有 ()。', options: ['A、 足球 ', 'B、 篮球 ', 'C、 田径 ', 'D、 游泳 ', 'E、 赛车 '], answer: ['A','B','C','D','E'], 解析: ' 体育摄影涵盖各种体育运动项目，包括足球、篮球、田径、游泳、赛车等，旨在捕捉运动中的精彩瞬间和运动员的活力。' },
+{ id: 249, type: 'multi', content: ' 纪实摄影的拍摄原则有 ()。', options: ['A、 真实性 ', 'B、 客观性 ', 'C、 故事性 ', 'D、 时效性 ', 'E、 人文性 '], answer: ['A','B','C','D','E'], 解析: ' 纪实摄影需遵循真实性（不虚构）、客观性（少主观干预）、故事性（传递信息）、时效性（记录当下）和人文性（关注人与社会）的原则。' },
+{ id: 250, type: 'multi', content: ' 艺术摄影的创作手法有 ()。', options: ['A、 创意构图 ', 'B、 特殊用光 ', 'C、 后期处理 ', 'D、 多重曝光 ', 'E、 抽象表现 '], answer: ['A','B','C','D','E'], 解析: ' 艺术摄影注重创意表达，常用创意构图、特殊用光、后期处理、多重曝光和抽象表现等手法，突破传统，展现独特的艺术视角和情感。' },
+{ id: 251, type: 'multi', content: ' 镜头按焦距分类，可分为 ()。', options: ['A、 广角镜头 ', 'B、 标准镜头 ', 'C、 长焦镜头 ', 'D、 变焦镜头 ', 'E、 定焦镜头 '], answer: ['A','B','C'], 解析: ' 按焦距分类，镜头分为广角（焦距短）、标准（焦距接近传感器对角线）和长焦（焦距长）；变焦和定焦是按焦距是否可变分类，不属于按焦距本身分类。' },
+{ id: 252, type: 'multi', content: ' 相机按传感器尺寸分类，可分为 ()。', options: ['A、 全画幅 ', 'B、 APS-C 画幅 ', 'C、 4/3 画幅 ', 'D、 中画幅 ', 'E、 小画幅 '], answer: ['A','B','C','D'], 解析: ' 相机传感器常见尺寸包括全画幅（36×24mm）、APS-C 画幅（约 24×16mm）、4/3 画幅（17.3×13mm）和中画幅（大于全画幅），小画幅不是标准分类。' },
+{ id: 253, type: 'multi', content: ' 摄影中，常用的测光模式有 ()。', options: ['A、 评价测光 ', 'B、 中央重点测光 ', 'C、 点测光 ', 'D、 局部测光 ', 'E、 平均测光 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的测光模式：评价测光（多区域评估）、中央重点（偏重中央）、点测光（小区域）、局部测光（中等区域）、平均测光（整体平均），适用于不同场景。' },
+{ id: 254, type: 'multi', content: 'Photoshop 中，常用的图层混合模式有 ()。', options: ['A、 正常 ', 'B、 叠加 ', 'C、 正片叠底 ', 'D、 滤色 ', 'E、 柔光 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常用的图层混合模式：正常（默认）、叠加（增强对比度）、正片叠底（变暗）、滤色（变亮）、柔光（柔和混合），用于不同的图像混合效果。' },
+{ id: 255, type: 'multi', content: ' 适合拍摄剪影的光线条件有 ()。', options: ['A、 逆光 ', 'B、 侧逆光 ', 'C、 顺光 ', 'D、 日落时分 ', 'E、 日出时分 '], answer: ['A','B','D','E'], 解析: ' 剪影和侧逆光时，光源在主体后方，能形成剪影效果；日落和日落时分光线角度低，适合拍摄剪影，顺光无法形成剪影，会照亮主体。' },
+{ id: 256, type: 'multi', content: ' 全景摄影的拼接软件有 ()。', options: ['A、 Photoshop', 'B、 Lightroom', 'C、 微软全景拼图 ', 'D、 PTGui', 'E、 相机厂商自带软件 '], answer: ['A','B','C','D','E'], 解析: ' 这些软件都可用于全景拼接：Photoshop 和 Lightroom 功能全面，微软全景拼图简单易用，PTGui 专业全景拼接，相机厂商软件针对自家相机优化，拼接效果好。' },
+{ id: 257, type: 'multi', content: ' 微距摄影的题材有 ()。', options: ['A、 昆虫 ', 'B、 花卉 ', 'C、 珠宝 ', 'D、 纹理 ', 'E、 水滴 '], answer: ['A','B','C','D','E'], 解析: ' 微距摄影适合拍摄细小物体或细节：昆虫、花卉的细节，珠宝的质感，各种表面的纹理，水滴的形态等，能展现肉眼难以观察的微观世界。' },
+{ id: 258, type: 'multi', content: ' 影响色彩对比度的因素有 ()。', options: ['A、 色相差异 ', 'B、 饱和度差异 ', 'C、 明度差异 ', 'D、 面积大小 ', 'E、 位置关系 '], answer: ['A','B','C','D','E'], 解析: ' 色彩对比度受色相（如红绿对比）、饱和度（鲜艳与灰暗）、明度（明暗对比）差异影响，同时色彩的面积大小和位置关系也会增强或减弱对比效果。' },
+{ id: 259, type: 'multi', content: ' 人像摄影中，常用的表情引导方法有 ()。', options: ['A、 聊天互动 ', 'B、 讲笑话 ', 'C、 引导回忆 ', 'D、 调整姿势 ', 'E、 给予肯定 '], answer: ['A','B','C','D','E'], 解析: ' 引导人像表情的方法包括聊天互动放松心情，讲笑话引发笑容，引导回忆产生特定情感，调整姿势辅助表情自然，给予肯定增强自信，这些方法能帮助被摄者展现自然表情。' },
+{ id: 260, type: 'multi', content: ' 摄影构图中，平衡的类型有 ()。', options: ['A、 对称平衡 ', 'B、 不对称平衡 ', 'C、 动态平衡 ', 'D、 静态平衡 ', 'E、 色彩平衡 '], answer: ['A','B','C','D'], 解析: ' 摄影构图的平衡类型包括对称平衡（左右对称）、不对称平衡（视觉重量平衡）、动态平衡（有运动感的平衡）、静态平衡（稳定的平衡）；色彩平衡是色彩关系，不属于构图平衡类型。' },
+{ id: 261, type: 'multi', content: ' 新闻摄影中，常用的拍摄手法有 ()。', options: ['A、 抓拍 ', 'B、 连拍 ', 'C、 广角拍摄 ', 'D、 长焦拍摄 ', 'E、 低调处理 '], answer: ['A','B','C','D'], 解析: ' 新闻摄影常用抓拍记录真实瞬间，连拍捕捉动态过程，广角拍摄环境，长焦拍摄特写；低调处理常用于艺术摄影，新闻摄影多追求客观呈现，较少刻意低调处理。' },
+{ id: 262, type: 'multi', content: ' 商业摄影中，产品的摆放原则有 ()。', options: ['A、 突出主体 ', 'B、 展现细节 ', 'C、 美观大方 ', 'D、 符合使用习惯 ', 'E、 考虑透视 '], answer: ['A','B','C','D','E'], 解析: ' 商业摄影产品摆放需突出主体吸引注意，展现细节体现特点，美观大方提升吸引力，符合使用习惯便于理解，考虑透视保证比例正常，这些原则共同提升产品表现力。' },
+{ id: 263, type: 'multi', content: 'RAW 格式与 JPEG 格式的区别有 ()。', options: ['A、 文件大小 ', 'B、 细节保留 ', 'C、 后期空间 ', 'D、 兼容性 ', 'E、 处理速度 '], answer: ['A','B','C','D','E'], 解析: 'RAW 格式文件大、细节保留多、后期空间大、兼容性差（需专用软件）、处理速度慢；JPEG 格式则相反，文件小、细节少、后期空间小、兼容性好、处理快。' },
+{ id: 264, type: 'multi', content: ' 摄影中，常用的光线方向有 ()。', options: ['A、 顺光 ', 'B、 前侧光 ', 'C、 侧光 ', 'D、 后侧光 ', 'E、 逆光 '], answer: ['A','B','C','D','E'], 解析: ' 光线方向按与相机和被摄体的角度分为顺光（0°）、前侧光（45°）、侧光（90°）、后侧光（135°）和逆光（180°），不同方向产生不同的光影效果。' },
+{ id: 265, type: 'multi', content: ' 人像摄影中，常用的服装搭配原则有 ()。', options: ['A、 与背景协调 ', 'B、 符合人物气质 ', 'C、 色彩和谐 ', 'D、 简洁大方 ', 'E、 时尚潮流 '], answer: ['A','B','C','D'], 解析: ' 人像服装搭配需与背景协调不冲突，符合人物气质展现个性，色彩和谐美观，简洁大方不抢镜；时尚潮流并非必需，需根据拍摄主题而定。' },
+{ id: 266, type: 'multi', content: ' 风光摄影中，常用的拍摄时间有 ()。', options: ['A、 日出前后 ', 'B、 日落前后 ', 'C、 正午时分 ', 'D、 阴天 ', 'E、 雨后 '], answer: ['A','B','D','E'], 解析: ' 日出日落前后光线柔和、色彩丰富，是风光摄影黄金时段；阴天光线均匀适合表现细节；雨后空气清新、色彩饱和；正午光线强烈、反差大，不适合多数风光拍摄。' },
+{ id: 267, type: 'multi', content: 'Photoshop 中，常用的修图工具有 ()。', options: ['A、 污点修复画笔 ', 'B、 修复画笔 ', 'C、 修补工具 ', 'D、 克隆图章 ', 'E、 液化工具 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常用修图工具：污点修复快速去除小瑕疵，修复画笔和修补工具结合周围像素修复，克隆图章复制像素，液化工具调整形状，用于人像和产品修图。' },
+{ id: 268, type: 'multi', content: ' 摄影中，常用的色彩搭配有 ()。', options: ['A、 对比色搭配 ', 'B、 邻近色搭配 ', 'C、 互补色搭配 ', 'D、 单色搭配 ', 'E、 冷暖色搭配 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是常见的色彩搭配方法：对比色（色轮上相距较远）、邻近色（相邻颜色）、互补色（色轮相对）、单色（同一颜色不同明度）、冷暖色（暖色与冷色）搭配，产生不同视觉效果。' },
+{ id: 269, type: 'multi', content: ' 儿童摄影中，常用的拍摄风格有 ()。', options: ['A、 清新自然 ', 'B、 活泼可爱 ', 'C、 复古怀旧 ', 'D、 时尚潮流 ', 'E、 简约大气 '], answer: ['A','B','C','D','E'], 解析: ' 儿童摄影风格多样，包括清新自然（展现童真）、活泼可爱（表现活力）、复古怀旧（经典风格）、时尚潮流（现代感）、简约大气（突出主体）等，满足不同需求。' },
+{ id: 270, type: 'multi', content: ' 夜景摄影中，常用的拍摄技巧有 ()。', options: ['A、 长时间曝光 ', 'B、 小光圈 ', 'C、 低感光度 ', 'D、 手动对焦 ', 'E、 三脚架 '], answer: ['A','B','C','D','E'], 解析: ' 夜景摄影常用长时间曝光捕捉光线，小光圈增加景深和星芒效果，低感光度保证画质，手动对焦确保清晰，三脚架稳定相机，这些技巧共同保证夜景照片质量。' },
+{ id: 271, type: 'multi', content: ' 体育摄影中，常用的相机设置有 ()。', options: ['A、 高速快门 ', 'B、 连续对焦 ', 'C、 高感光度 ', 'D、 大光圈 ', 'E、 快门优先模式 '], answer: ['A','B','C','D','E'], 解析: ' 体育摄影需高速快门凝固动作，连续对焦追踪运动主体，高感光度应对室内或弱光环境，大光圈增加进光量和浅景深，快门优先模式便于控制快门速度，这些设置适合体育拍摄。' },
+{ id: 272, type: 'multi', content: ' 纪实摄影中，常用的器材有 ()。', options: ['A、 小型相机 ', 'B、 大变焦镜头 ', 'C、 定焦镜头 ', 'D、 闪光灯 ', 'E、 三脚架 '], answer: ['A','B','C'], 解析: ' 纪实摄影常用小型相机隐蔽拍摄，大变焦镜头适应不同场景，定焦镜头成像质量好且便携；闪光灯可能干扰现场氛围，三脚架不便移动，较少用于纪实摄影。' },
+{ id: 273, type: 'multi', content: ' 艺术摄影中，常用的表现手法有 ()。', options: ['A、 象征 ', 'B、 隐喻 ', 'C、 夸张 ', 'D、 抽象 ', 'E、 写实 '], answer: ['A','B','C','D'], 解析: ' 艺术摄影注重主观表达，常用象征（符号表意）、隐喻（间接暗示）、夸张（强调特征）、抽象（提炼形式）等手法；写实是纪实摄影的主要手法，艺术摄影较少单纯写实。' },
+{ id: 274, type: 'multi', content: ' 镜头的成像质量取决于 ()。', options: ['A、 镜片质量 ', 'B、 镀膜技术 ', 'C、 镜头结构 ', 'D、 光圈大小 ', 'E、 焦距长短 '], answer: ['A','B','C'], 解析: ' 镜头成像质量由镜片质量（材质和精度）、镀膜技术（减少反光）、镜头结构（镜片组合）决定；光圈和焦距影响拍摄效果，不直接决定成像质量本身。' },
+{ id: 275, type: 'multi', content: ' 相机的对焦方式有 ()。', options: ['A、 自动对焦 ', 'B、 手动对焦 ', 'C、 单点对焦 ', 'D、 多点对焦 ', 'E、 连续对焦 '], answer: ['A','B','C','D','E'], 解析: ' 相机对焦方式包括自动和手动对焦；自动对焦又分为单点（单个对焦点）、多点（多个对焦点）、连续对焦（追踪运动物体）等，满足不同拍摄需求。' },
+{ id: 276, type: 'multi', content: ' 摄影中，常用的曝光补偿原则有 ()。', options: ['A、 白加黑减 ', 'B、 亮加暗减 ', 'C、 红加蓝减 ', 'D、 高加低减 ', 'E、 大加深减 '], answer: ['A'], 解析: '“白加黑减” 是曝光补偿的基本原则：拍摄白色或明亮物体时增加曝光（白加），拍摄黑色或暗物体时减少曝光（黑减），以避免因测光表误判导致的曝光不足或过度。' },
+{ id: 277, type: 'multi', content: 'Photoshop 中，常用的调色命令有 ()。', options: ['A、 色阶 ', 'B、 曲线 ', 'C、 色相 / 饱和度 ', 'D、 色彩平衡 ', 'E、 可选颜色 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是 Photoshop 中常用的调色命令：色阶和曲线调整 tonal range，色相 / 饱和度调整色彩属性，色彩平衡调整整体色彩偏向，可选颜色精确调整特定颜色。' },
+{ id: 278, type: 'multi', content: ' 适合拍摄高调照片的题材有 ()。', options: ['A、 婚纱摄影 ', 'B、 儿童摄影 ', 'C、 产品摄影（白色产品）', 'D、 雪景 ', 'E、 夜景 '], answer: ['A','B','C','D'], 解析: ' 高调照片以亮色调为主，适合婚纱（纯洁）、儿童（活泼）、白色产品（突出主体）、雪景（自然明亮）等题材；夜景以暗色调为主，不适合高调表现。' },
+{ id: 279, type: 'multi', content: ' 适合拍摄低调照片的题材有 ()。', options: ['A、 男性人像 ', 'B、 珠宝摄影 ', 'C、 夜景 ', 'D、 古建筑 ', 'E、 花卉 '], answer: ['A','B','C','D'], 解析: ' 低调照片以暗色调为主，适合表现男性人像（硬朗）、珠宝（突出光泽）、夜景（暗环境）、古建筑（厚重感）；花卉通常色彩鲜艳，更适合中间调或高调表现。' },
+{ id: 280, type: 'multi', content: ' 全景摄影的注意事项有 ()。', options: ['A、 保持水平 ', 'B、 重叠部分充足 ', 'C、 固定曝光参数 ', 'D、 使用三脚架 ', 'E、 避免移动被摄体 '], answer: ['A','B','C','D','E'], 解析: ' 全景摄影需保持水平避免拼接歪斜，重叠部分（约 15-30%）保证拼接准确，固定曝光参数避免明暗差异，使用三脚架保证稳定，避免被摄体移动导致重影，这些都是成功拼接的关键。' },
+{ id: 281, type: 'multi', content: ' 微距摄影中，常用的光线有 ()。', options: ['A、 环形闪光灯 ', 'B、 自然光 ', 'C、 LED 补光灯 ', 'D、 影室灯 ', 'E、 手电筒 '], answer: ['A','B','C','D','E'], 解析: ' 微距摄影因拍摄距离近易遮挡光线，常用环形闪光灯（均匀补光）、自然光（柔和）、LED 补光灯（持续光源）、影室灯（可控光线），甚至手电筒在应急时也可作为补光光源。' },
+{ id: 282, type: 'multi', content: ' 影响照片色彩的因素有 ()。', options: ['A、 光源色温 ', 'B、 白平衡设置 ', 'C、 镜头滤镜 ', 'D、 感光元件 ', 'E、 后期处理 '], answer: ['A','B','C','D','E'], 解析: ' 光源色温决定基础色调，白平衡调整色彩还原，滤镜改变光线色彩，感光元件影响色彩表现，后期处理可调整色彩，这些因素共同决定照片的最终色彩。' },
+{ id: 283, type: 'multi', content: ' 人像摄影中，常用的背景处理方法有 ()。', options: ['A、 虚化背景 ', 'B、 简洁背景 ', 'C、 与主体呼应 ', 'D、 明暗对比 ', 'E、 色彩对比 '], answer: ['A','B','C','D','E'], 解析: ' 人像背景处理方法包括虚化背景（突出主体）、简洁背景（减少干扰）、与主体呼应（风格协调）、明暗对比（增强层次）、色彩对比（视觉冲击），根据拍摄需求选择合适方法。' },
+{ id: 284, type: 'multi', content: ' 摄影构图中，常用的线条有 ()。', options: ['A、 水平线 ', 'B、 垂直线 ', 'C、 对角线 ', 'D、 曲线 ', 'E、 引导线 '], answer: ['A','B','C','D','E'], 解析: ' 这些都是构图中常用的线条：水平线（稳定）、垂直线（挺拔）、对角线（动感）、曲线（柔美）、引导线（引导视线），不同线条传递不同的视觉感受和情感。' },
+{ id: 285, type: 'multi', content: ' 新闻摄影的器材选择应考虑 ()。', options: ['A、 便携性 ', 'B、 反应速度 ', 'C、 续航能力 ', 'D、 隐蔽性 ', 'E、 画质 '], answer: ['A','B','C','D','E'], 解析: ' 新闻摄影器材需便携（适应移动）、反应速度快（捕捉瞬间）、续航能力强（长时间拍摄）、隐蔽性好（不干扰现场）、画质好（保证信息清晰），这些都是重要考虑因素。' },
+{ id: 286, type: 'multi', content: ' 商业摄影的后期处理要点有 ()。', options: ['A、 突出产品质感 ', 'B、 保证色彩准确 ', 'C、 背景干净整洁 ', 'D、 细节清晰可见 ', 'E、 符合品牌风格 '], answer: ['A','B','C','D','E'], 解析: ' 商业摄影后期需突出产品质感（吸引购买）、保证色彩准确（真实呈现）、背景干净（不干扰）、细节清晰（展示特点）、符合品牌风格（统一形象），提升商业价值。' },
+{ id: 287, type: 'multi', content: ' 下列属于职业道德基本规范的是 ()。', options: ['A、 爱岗敬业 ', 'B、 诚实守信 ', 'C、 办事公道 ', 'D、 服务群众 ', 'E、 奉献社会 '], answer: ['A','B','C','D','E'], 解析: ' 职业道德基本规范包括爱岗敬业（忠于职守）、诚实守信（言行一致）、办事公道（公平公正）、服务群众（满足需求）、奉献社会（承担责任），这些是各行业共同遵循的道德准则。' },
+{ id: 288, type: 'multi', content: ' 劳动者应尽的义务有 ()。', options: ['A、 完成劳动任务 ', 'B、 提高职业技能 ', 'C、 执行劳动安全卫生规程 ', 'D、 遵守劳动纪律和职业道德 ', 'E、 依法参加和组织工会 '], answer: ['A','B','C','D'], 解析: ' 劳动者的义务包括完成劳动任务、提高职业技能、执行安全规程、遵守纪律和道德；依法参加和组织工会是劳动者的权利，而非义务。' },
+{ id: 289, type: 'multi', content: ' 下列关于勤劳节俭的说法，正确的是 ()。', options: ['A、 阻碍消费，因而会阻碍市场经济的发展 ', 'B、 市场经济需要勤劳，但不需要节俭 ', 'C、 勤劳节俭是促进经济和社会发展的动力 ', 'D、 勤劳是现代市场经济需要的，而节俭则不宜提倡 '], answer: ['C'], 解析: ' 勤劳节俭是中华民族的传统美德，也是促进经济和社会发展的动力，能提高资源利用效率，并非阻碍消费或不适用于市场经济，只有选项 C 正确。' },
+{ id: 290, type: 'multi', content: ' 下列说法中，符合 "语言规范" 具体要求的是 ()。', options: ['A、 多说俏皮话 ', 'B、 用尊称，不用忌语 ', 'C、 语速要快，节省客人时间 ', 'D、 不乱幽默，以免客人误解 '], answer: ['B','D'], 解析: ' 语言规范要求使用尊称、避免忌语，不乱幽默以免误解；多说俏皮话可能不庄重，语速过快不利于沟通，因此正确选项为 B、D。' },
+{ id: 291, type: 'multi', content: ' 待人热情是职业活动的需要，对此你认为是 ()。', options: ['A、 要视对方与自己关系好坏而定 ', 'B、 要由个人心情好坏而定 ', 'C、 要发自内心，是装不出来的 ', 'D、 对不同地位、身份的人要区别对待 '], answer: ['C'], 解析: ' 待人热情应发自内心，真诚自然，不因关系、心情或对方地位而改变，这是职业素养的体现，只有选项 C 符合要求。' },
+{ id: 292, type: 'multi', content: ' 关于诚实守信的说法，你认为正确的是 ()。', options: ['A、 诚实守信是市场经济法则 ', 'B、 诚实守信是企业的无形资产 ', 'C、 诚实守信是为人之本 ', 'D、 奉行诚实守信的原则在市场经济中必定难以立足 '], answer: ['A','B','C'], 解析: ' 诚实守信是市场经济的基本法则，能为企业带来信誉（无形资产），也是做人的根本；奉行诚实守信在市场经济中能长期立足，而非难以立足，因此正确选项为 A、B、C。' },
+{ id: 293, type: 'multi', content: ' 创新对企事业和个人发展的作用表现在 ()。', options: ['A、 是企事业持续、健康发展的巨大动力 ', 'B、 是企事业竞争取胜的重要手段 ', 'C、 是个人事业获得成功的关键因素 ', 'D、 是个人提高自身职业道德水平的重要条件 '], answer: ['A','B','C'], 解析: ' 创新是企事业发展的动力和竞争手段，也是个人成功的关键；创新与职业道德水平无直接关联，因此正确选项为 A、B、C。' },
+{ id: 294, type: 'multi', content: ' 职业纪律具有的特点是 ()。', options: ['A、 明确的规定性 ', 'B、 一定的强制性 ', 'C、 一定的弹性 ', 'D、 一定的自我约束性 '], answer: ['A','B'], 解析: ' 职业纪律具有明确的规定性（具体要求）和一定的强制性（必须遵守），不具有弹性，自我约束性是职业道德的特点，因此正确选项为 A、B。' },
+{ id: 295, type: 'multi', content: ' 无论你从事的工作有多么特殊，它总是离不开一定的 () 的约束。', options: ['A、 岗位责任 ', 'B、 家庭美德 ', 'C、 规章制度 ', 'D、 职业道德 '], answer: ['A','C','D'], 解析: ' 任何工作都受岗位责任（职责要求）、规章制度（组织规定）和职业道德（行业规范）的约束；家庭美德是家庭生活中的道德规范，与工作约束无关，因此正确选项为 A、C、D。' },
+{ id: 296, type: 'multi', content: ' 关于勤劳节俭的正确说法是 ()。', options: ['A、 消费可以拉动需求，促进经济发展，因此提倡节俭是不合时宜的 ', 'B、 勤劳节俭是物质匮乏时代的产物，不符合现代企业精神 ', 'C、 勤劳可以提高效率，节俭可以降低成本 ', 'D、 勤劳节俭有利于可持续发展 '], answer: ['C','D'], 解析: ' 勤劳能提高效率，节俭能降低成本，两者都有利于可持续发展；提倡节俭与促进消费并不矛盾，也并非仅适用于物质匮乏时代，因此正确选项为 C、D。' },
+{ id: 297, type: 'multi', content: ' 下列说法中，你认为正确的有 ()。', options: ['A、 岗位责任规定岗位的工作范围和工作性质 ', 'B、 操作规则是职业活动具体而详细的次序和动作要求 ', 'C、 规章制度是职业活动中最基本的要求 ', 'D、 职业规范是员工在工作中必须遵守和履行的职业行为要求 '], answer: ['A','B','C','D'], 解析: ' 岗位责任定义工作范围和性质，操作规则规定具体动作次序，规章制度是基本要求，职业规范是必须遵守的行为要求，这些说法均正确。' },
+{ id: 298, type: 'multi', content: ' 维护企业信誉必须做到 ()。', options: ['A、 树立产品质量意识 ', 'B、 重视服务质量，树立服务意识 ', 'C、 保守企业一切秘密 ', 'D、 妥善处理顾客对企业的投诉 '], answer: ['A','B','D'], 解析: ' 维护企业信誉需保证产品质量、重视服务、妥善处理投诉；保守企业秘密虽重要，但并非一切秘密（如违法信息不应保守），因此正确选项为 A、B、D。' },
+{ id: 299, type: 'multi', content: ' 下列哪一项没有违反诚实守信的要求 ()。', options: ['A、 保守企业秘密 ', 'B、 派人打进竞争对手内部，增强竞争优势 ', 'C、 根据服务对象来决定是否遵守承诺 ', 'D、 凡有利于企业利益的行为 '], answer: ['A'], 解析: ' 保守企业秘密是诚实守信的体现；打入竞争对手内部是不正当竞争，根据对象决定是否遵守承诺和只考虑企业利益均违背诚实守信原则，因此正确选项为 A。' },
+{ id: 300, type: 'multi', content: ' 职业道德活动中，符合 "仪表端庄" 具体要求的是 ()。', options: ['A、 着装华贵 ', 'B、 鞋袜搭配合理 ', 'C、 饰品俏丽 ', 'D、 发型突出个性 '], answer: ['B'], 解析: ' 仪表端庄要求整洁得体，鞋袜搭配合理是基本要求；着装华贵、饰品俏丽、发型突出个性可能不符合职业场合的端庄规范，因此正确选项为 B。' },
+{ id: 301, type: 'multi', content: ' 下列说法中，不符合从业人员开拓创新要求的是 ()。', options: ['A、 坚定的信心和顽强的意志 ', 'B、 先天生理因素 ', 'C、 思维训练 ', 'D、 标新立异 '], answer: ['B','D'], 解析: ' 开拓创新需要信心意志和思维训练；先天生理因素并非必要条件，标新立异不等于创新（可能脱离实际），因此不符合要求的选项为 B、D。' },
+{ id: 302, type: 'multi', content: ' 文明职工的基本要求是 ()。', options: ['A、 模范遵守国家法律和各项纪律 ', 'B、 努力学习科学技术知识，在业务上精益求精 ', 'C、 顾客是上帝，对顾客应唯唯诺诺 ', 'D、 对态度蛮横的顾客要以其人之道还治其人之身 '], answer: ['A','B'], 解析: ' 文明职工应遵纪守法、钻研业务；对顾客应尊重但不唯唯诺诺，对蛮横顾客应耐心处理而非以牙还牙，因此正确选项为 A、B。' },
+{ id: 303, type: 'multi', content: ' 职业道德的价值在于 ()。', options: ['A、 有利于企业提高产品和服务的质量 ', 'B、 可以降低成本、提高劳动生产率和经济效益 ', 'C、 有利于协调职工之间及职工与领导之间的关系 ', 'D、 有利于企业树立良好形象，创造著名品牌 '], answer: ['A','B','C','D'], 解析: ' 职业道德能提高产品服务质量、降低成本、协调人际关系、树立企业形象，这些都是其价值的体现，因此所有选项均正确。' },
+{ id: 304, type: 'multi', content: ' 关于爱岗敬业的说法中，你认为正确的是 ()。', options: ['A、 爱岗敬业是现代企业精神 ', 'B、 现代社会提倡人才流动，爱岗敬业正逐步丧失它的价值 ', 'C、 爱岗敬业要树立终生学习观念 ', 'D、 发扬螺丝钉精神是爱岗敬业的重要表现 '], answer: ['A','C','D'], 解析: ' 爱岗敬业是现代企业精神，需要树立终身学习观念，螺丝钉精神是爱岗敬业的体现；人才流动与爱岗敬业并不矛盾，爱岗敬业仍具有重要价值，因此正确选项为 A、C、D。' },
+{ id: 305, type: 'multi', content: ' 以下说法中，正确的是 ()。', options: ['A、 办事公道是对企业上司的职业道德要求，与普通职工关系不大 ', 'B、 诚实守信是每一个职业劳动者都应具有的品质 ', 'C、 诚实守信可以带来经济效益 ', 'D、 在激烈的市场竞争中，信守承诺者往往吃亏 '], answer: ['B','C'], 解析: ' 办事公道是对所有职工的要求，并非仅对上司；诚实守信是每个劳动者应具备的品质，且能带来长期经济效益；信守承诺者在市场竞争中更易获得信任，不吃亏，因此正确选项为 B、C。' },
+{ id: 306, type: 'multi', content: ' 在职业实践中，做到公私分明应 ()。', options: ['A、 增强大局意识 ', 'B、 富有奉献精神 ', 'C、 从细微处严格要求自己 ', 'D、 寓私于公 '], answer: ['A','B','C'], 解析: ' 公私分明要求增强大局意识、富有奉献精神、严格要求自己；寓私于公是公私不分的表现，因此正确选项为 A、B、C。' }
+];
+
+// 当前考试数据
+let currentExam = {
+questions: [],
+userAnswers: {},
+currentQuestionIndex: 0,
+startTime: null,
+timerInterval: null
+};
+
+// DOM 元素
+const homeSection = document.getElementById ('home-section');
+const examSection = document.getElementById ('exam-section');
+const resultSection = document.getElementById ('result-section');
+const aboutSection = document.getElementById ('about-section');
+const historySection = document.getElementById ('history-section');
+const helpSection = document.getElementById ('help-section');
+
+const startExamBtn = document.getElementById('start-exam-btn');
+const startTrainingBtn = document.getElementById('start-training-btn');
+const submitExamBtn = document.getElementById('submit-exam-btn');
+const prevQuestionBtn = document.getElementById('prev-question-btn');
+const nextQuestionBtn = document.getElementById('next-question-btn');
+const reviewAllBtn = document.getElementById('review-all-btn');
+const restartExamBtn = document.getElementById('restart-exam-btn');
+const startFirstExamBtn = document.getElementById('start-first-exam');
+
+const questionContainer = document.getElementById('question-container');
+const questionNavigation = document.getElementById('question-navigation');
+const examTimer = document.getElementById('exam-timer');
+const totalScoreEl = document.getElementById('total-score');
+const scoreTextEl = document.getElementById('score-text');
+const resultStatusEl = document.getElementById('result-status');
+const judgeScoreEl = document.getElementById('judge-score');
+const singleScoreEl = document.getElementById('single-score');
+const multiScoreEl = document.getElementById('multi-score');
+const wrongQuestionsContainer = document.getElementById('wrong-questions-container');
+const historyListEl = document.getElementById('history-list');
+const historyEmptyEl = document.getElementById('history-empty');
+
+// 导航菜单切换
+function showSection (sectionId) {
+homeSection.classList.add ('hidden');
+examSection.classList.add ('hidden');
+resultSection.classList.add ('hidden');
+aboutSection.classList.add ('hidden');
+historySection.classList.add ('hidden');
+helpSection.classList.add ('hidden');
+
+document.getElementById(sectionId).classList.remove('hidden');
+}
+
+// 移动端菜单切换
+document.getElementById ('mobile-menu-button').addEventListener ('click', () => {
+const mobileMenu = document.getElementById ('mobile-menu');
+mobileMenu.classList.toggle ('hidden');
+});
+
+// 导航链接事件
+document.getElementById ('nav-home').addEventListener ('click', (e) => {
+e.preventDefault ();
+showSection ('home-section');
+});
+document.getElementById ('nav-about').addEventListener ('click', (e) => {
+e.preventDefault ();
+showSection ('about-section');
+});
+document.getElementById ('nav-history').addEventListener ('click', (e) => {
+e.preventDefault ();
+showHistory ();
+showSection ('history-section');
+});
+document.getElementById ('nav-help').addEventListener ('click', (e) => {
+e.preventDefault ();
+showSection ('help-section');
+});
+
+// 移动端导航链接事件
+document.getElementById ('mobile-nav-home').addEventListener ('click', (e) => {
+e.preventDefault ();
+document.getElementById ('mobile-menu').classList.add ('hidden');
+showSection ('home-section');
+});
+document.getElementById ('mobile-nav-about').addEventListener ('click', (e) => {
+e.preventDefault ();
+document.getElementById ('mobile-menu').classList.add ('hidden');
+showSection ('about-section');
+});
+document.getElementById ('mobile-nav-history').addEventListener ('click', (e) => {
+e.preventDefault ();
+document.getElementById ('mobile-menu').classList.add ('hidden');
+showHistory ();
+showSection ('history-section');
+});
+document.getElementById ('mobile-nav-help').addEventListener ('click', (e) => {
+e.preventDefault ();
+document.getElementById ('mobile-menu').classList.add ('hidden');
+showSection ('help-section');
+});
+
+// 页脚导航链接事件
+document.getElementById ('footer-home').addEventListener ('click', (e) => {
+e.preventDefault ();
+showSection ('home-section');
+});
+document.getElementById ('footer-about').addEventListener ('click', (e) => {
+e.preventDefault ();
+showSection ('about-section');
+});
+document.getElementById ('footer-history').addEventListener ('click', (e) => {
+e.preventDefault ();
+showHistory ();
+showSection ('history-section');
+});
+document.getElementById ('footer-help').addEventListener ('click', (e) => {
+e.preventDefault ();
+showSection ('help-section');
+});
+
+// 开始考试
+startExamBtn.addEventListener ('click', startExam);
+startFirstExamBtn.addEventListener ('click', (e) => {
+e.preventDefault ();
+startExam ();
+});
+restartExamBtn.addEventListener ('click', startExam);
+
+function startExam () {
+// 随机生成 100 道题：20 道判断，60 道单选，20 道多选
+const judgeQuestions = getRandomQuestions ('judge', 20);
+const singleQuestions = getRandomQuestions ('single', 60);
+const multiQuestions = getRandomQuestions ('multi', 20);
+
+currentExam.questions = [...judgeQuestions, ...singleQuestions, ...multiQuestions];
+currentExam.userAnswers = {};
+currentExam.currentQuestionIndex = 0;
+
+// 初始化导航和题目
+renderQuestionNavigation ();
+renderCurrentQuestion ();
+
+// 开始计时
+startTimer ();
+
+// 显示考试页面
+showSection ('exam-section');
+}
+
+// 从题库中随机抽取指定数量和类型的题目
+function getRandomQuestions (type, count) {
+const typeQuestions = questionBank.filter (q => q.type === type);
+// 打乱数组顺序
+const shuffled = [...typeQuestions].sort (() => 0.5 - Math.random ());
+// 返回前 count 个
+return shuffled.slice (0, count);
+}
+
+// 渲染题目导航
+function renderQuestionNavigation () {
+questionNavigation.innerHTML = '';
+
+currentExam.questions.forEach((question, index) => {
+const btn = document.createElement('button');
+btn.className = w-8 h-8 rounded-full flex items-center justify-center text-sm transition-standard ${ index === currentExam.currentQuestionIndex ? 'bg-primary text-white' : currentExam.userAnswers[question.id] ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-white text-secondary border border-border-color hover:border-primary' };
+btn.textContent = index + 1;
+btn.addEventListener('click', () => {
+currentExam.currentQuestionIndex = index;
+renderQuestionNavigation();
+renderCurrentQuestion();
+updateNavButtons();
+});
+questionNavigation.appendChild(btn);
+});
+}
+
+// 渲染当前题目
+function renderCurrentQuestion () {
+const question = currentExam.questions [currentExam.currentQuestionIndex];
+if (!question) return;
+
+let optionsHtml = '';
+
+if (question.type === 'judge') {
+optionsHtml = `
+
+plaintext
+                &#x3C;div class=&#x22;flex flex-col space-y-3 mt-4&#x22;&#x3E;
+                    &#x3C;label class=&#x22;flex items-center p-3 border border-border-color rounded-lg cursor-pointer hover:bg-gray-50 transition-standard ${
+                        currentExam.userAnswers[question.id] === &#x27;&#x221A;&#x27; ? &#x27;border-primary bg-primary/5&#x27; : &#x27;&#x27;
+                    }&#x22;&#x3E;
+                        &#x3C;input type=&#x22;radio&#x22; name=&#x22;q${question.id}&#x22; value=&#x22;&#x221A;&#x22; class=&#x22;mr-3 text-primary&#x22; ${
+                            currentExam.userAnswers[question.id] === &#x27;&#x221A;&#x27; ? &#x27;checked&#x27; : &#x27;&#x27;
+                        }&#x3E;
+                        &#x3C;span&#x3E;&#x221A;&#xFF08;&#x6B63;&#x786E;&#xFF09;&#x3C;/span&#x3E;
+                    &#x3C;/label&#x3E;
+                    &#x3C;label class=&#x22;flex items-center p-3 border border-border-color rounded-lg cursor-pointer hover:bg-gray-50 transition-standard ${
+                        currentExam.userAnswers[question.id] === &#x27;&#xD7;&#x27; ? &#x27;border-primary bg-primary/5&#x27; : &#x27;&#x27;
+                    }&#x22;&#x3E;
+                        &#x3C;input type=&#x22;radio&#x22; name=&#x22;q${question.id}&#x22; value=&#x22;&#xD7;&#x22; class=&#x22;mr-3 text-primary&#x22; ${
+                            currentExam.userAnswers[question.id] === &#x27;&#xD7;&#x27; ? &#x27;checked&#x27; : &#x27;&#x27;
+                        }&#x3E;
+                        &#x3C;span&#x3E;&#xD7;&#xFF08;&#x9519;&#x8BEF;&#xFF09;&#x3C;/span&#x3E;
+                    &#x3C;/label&#x3E;
+                &#x3C;/div&#x3E;
+            &#x60;;
+        } else if (question.type === &#x27;single&#x27;) {
+            optionsHtml = &#x27;&#x3C;div class=&#x22;space-y-3 mt-4&#x22;&#x3E;&#x27;;
+            question.options.forEach(option =&#x3E; {
+                const optionValue = option.charAt(0); // &#x83B7;&#x53D6;&#x9009;&#x9879;&#x5B57;&#x6BCD;A&#x3001;B&#x3001;C&#x3001;D
+                optionsHtml += &#x60;
+                    &#x3C;label class=&#x22;flex items-start p-3 border border-border-color rounded-lg cursor-pointer hover:bg-gray-50 transition-standard ${
+                        currentExam.userAnswers[question.id] === optionValue ? &#x27;border-primary bg-primary/5&#x27; : &#x27;&#x27;
+                    }&#x22;&#x3E;
+                        &#x3C;input type=&#x22;radio&#x22; name=&#x22;q${question.id}&#x22; value=&#x22;${optionValue}&#x22; class=&#x22;mt-1 mr-3 text-primary&#x22; ${
+                            currentExam.userAnswers[question.id] === optionValue ? &#x27;checked&#x27; : &#x27;&#x27;
+                        }&#x3E;
+                        &#x3C;span&#x3E;${option}&#x3C;/span&#x3E;
+                    &#x3C;/label&#x3E;
+                &#x60;;
+            });
+            optionsHtml += &#x27;&#x3C;/div&#x3E;&#x27;;
+        } else if (question.type === &#x27;multi&#x27;) {
+            optionsHtml = &#x27;&#x3C;div class=&#x22;space-y-3 mt-4&#x22;&#x3E;&#x27;;
+            question.options.forEach(option =&#x3E; {
+                const optionValue = option.charAt(0); // &#x83B7;&#x53D6;&#x9009;&#x9879;&#x5B57;&#x6BCD;A&#x3001;B&#x3001;C&#x3001;D&#x3001;E
+                const isSelected = currentExam.userAnswers[question.id] 
+                    ? currentExam.userAnswers[question.id].includes(optionValue) 
+                    : false;
+
+optionsHtml += <label class="flex items-start p-3 border border-border-color rounded-lg cursor-pointer hover:bg-gray-50 transition-standard ${ isSelected ? 'border-primary bg-primary/5' : '' }"> <input type="checkbox" name="q${question.id}" value="${optionValue}" class="mt-1 mr-3 text-primary" ${ isSelected ? 'checked' : '' }> <span>${option}</span> </label> ;
+});
+optionsHtml += '</div>';
+}
+
+questionContainer.innerHTML = `
+
+plaintext
+            &#x3C;div class=&#x22;flex items-start&#x22;&#x3E;
+                &#x3C;span class=&#x22;bg-primary/10 text-primary font-medium px-3 py-1 rounded-full mr-3 mt-1&#x22;&#x3E;
+                    ${question.type === &#x27;judge&#x27; ? &#x27;&#x5224;&#x65AD;&#x9898;&#x27; : question.type === &#x27;single&#x27; ? &#x27;&#x5355;&#x9009;&#x9898;&#x27; : &#x27;&#x591A;&#x9009;&#x9898;&#x27;}
+                &#x3C;/span&#x3E;
+                &#x3C;h3 class=&#x22;text-xl font-semibold&#x22;&#x3E;${currentExam.currentQuestionIndex + 1}. ${question.content}&#x3C;/h3&#x3E;
+            &#x3C;/div&#x3E;
+            ${optionsHtml}
+        &#x60;;
+
+// 添加选项 change 事件监听
+const inputs = questionContainer.querySelectorAll ('input');
+inputs.forEach (input => {
+input.addEventListener ('change', (e) => {
+if (question.type === 'multi') {
+// 多选题处理
+const checkedValues = Array.from (questionContainer.querySelectorAll ('input:checked'))
+.map (input => input.value)
+.sort ()
+.join ('');
+currentExam.userAnswers [question.id] = checkedValues;
+} else {
+// 判断题和单选题处理
+currentExam.userAnswers [question.id] = e.target.value;
+}
+renderQuestionNavigation ();
+});
+});
+}
+
+// 更新导航按钮状态
+function updateNavButtons () {
+prevQuestionBtn.disabled = currentExam.currentQuestionIndex === 0;
+nextQuestionBtn.disabled = currentExam.currentQuestionIndex === currentExam.questions.length - 1;
+}
+
+// 上一题
+prevQuestionBtn.addEventListener ('click', () => {
+if (currentExam.currentQuestionIndex > 0) {
+currentExam.currentQuestionIndex--;
+renderQuestionNavigation ();
+renderCurrentQuestion ();
+updateNavButtons ();
+}
+});
+
+// 下一题
+nextQuestionBtn.addEventListener ('click', () => {
+if (currentExam.currentQuestionIndex < currentExam.questions.length - 1) {
+currentExam.currentQuestionIndex++;
+renderQuestionNavigation ();
+renderCurrentQuestion ();
+updateNavButtons ();
+}
+});
+
+// 开始计时器
+function startTimer () {
+// 清除之前的计时器
+if (currentExam.timerInterval) {
+clearInterval (currentExam.timerInterval);
+}
+
+// 设置考试时间为 60 分钟
+const totalMinutes = 60;
+currentExam.startTime = new Date ();
+const endTime = new Date (currentExam.startTime.getTime () + totalMinutes * 60000);
+
+// 更新计时器显示
+function updateTimer () {
+const now = new Date ();
+const remainingTime = endTime - now;
+
+if (remainingTime <= 0) {
+// 时间到，自动交卷
+clearInterval (currentExam.timerInterval);
+examTimer.textContent = '00:00';
+submitExam ();
+return;
+}
+
+const minutes = Math.floor(remainingTime / 60000);
+const seconds = Math.floor((remainingTime % 60000) / 1000);
+
+examTimer.textContent = ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
+
+// 最后 10 分钟变红提醒
+if (remainingTime < 10 * 60000) {
+examTimer.classList.add ('text-red-500');
+} else {
+examTimer.classList.remove ('text-red-500');
+}
+}
+
+// 立即更新一次
+updateTimer ();
+// 每秒更新一次
+currentExam.timerInterval = setInterval (updateTimer, 1000);
+}
+
+// 提交考试
+submitExamBtn.addEventListener ('click', submitExam);
+
+function submitExam () {
+// 清除计时器
+if (currentExam.timerInterval) {
+clearInterval (currentExam.timerInterval);
+currentExam.timerInterval = null;
+}
+
+// 计算成绩
+const result = calculateScore ();
+
+// 显示成绩页面
+displayResult (result);
+
+// 保存考试记录
+saveExamHistory (result);
+
+// 显示结果页面
+showSection ('result-section');
+}
+
+// 计算成绩
+function calculateScore () {
+let totalScore = 0;
+let judgeScore = 0;
+let singleScore = 0;
+let multiScore = 0;
+const wrongQuestions = [];
+
+currentExam.questions.forEach(question => {
+const userAnswer = currentExam.userAnswers[question.id] || '';
+const isCorrect = question.type === 'multi'
+? userAnswer === question.answer.sort().join('')
+: userAnswer === question.answer;
+
+if (isCorrect) {
+totalScore += 1;
+if (question.type === 'judge') judgeScore += 1;
+else if (question.type === 'single') singleScore += 1;
+else if (question.type === 'multi') multiScore += 1;
+} else {
+wrongQuestions.push ({
+...question,
+userAnswer: userAnswer || ' 未作答 '
+});
+}
+});
+
+return {
+totalScore,
+judgeScore,
+singleScore,
+multiScore,
+wrongQuestions,
+date: new Date()
+};
+}
+
+// 显示成绩结果
+function displayResult (result) {
+totalScoreEl.textContent = result.totalScore;
+scoreTextEl.textContent = result.totalScore;
+
+// 设置成绩状态
+let statusClass = '';
+let statusText = '';
+
+if (result.totalScore>= 90) {
+statusClass = 'bg-green-100 text-green-800';
+statusText = ' 优秀 ';
+} else if (result.totalScore >= 80) {
+statusClass = 'bg-blue-100 text-blue-800';
+statusText = ' 良好 ';
+} else if (result.totalScore >= 60) {
+statusClass = 'bg-yellow-100 text-yellow-800';
+statusText = ' 及格 ';
+} else {
+statusClass = 'bg-red-100 text-red-800';
+statusText = ' 不及格 ';
+}
+
+resultStatusEl.className = inline-block px-4 py-1 rounded-full text-sm font-medium mb-6 ${statusClass};
+resultStatusEl.textContent = statusText;
+
+// 各题型得分
+judgeScoreEl.textContent = ${result.judgeScore}分;
+singleScoreEl.textContent = ${result.singleScore}分;
+multiScoreEl.textContent = ${result.multiScore}分;
+
+// 显示错题解析
+renderWrongQuestions (result.wrongQuestions);
+}
+
+// 渲染错题解析
+function renderWrongQuestions (wrongQuestions) {
+if (wrongQuestions.length === 0) {
+wrongQuestionsContainer.innerHTML = '<p class="text-center py-6 text-secondary/70">恭喜您！本次考试没有错题。</p>';
+return;
+}
+
+wrongQuestionsContainer.innerHTML = '';
+
+wrongQuestions.forEach((question, index) => {
+let optionsHtml = '';
+let answerText = '';
+
+if (question.type === 'judge') {
+answerText = question.answer === '√' ? ' 正确 ' : ' 错误 ';
+} else if (question.type === 'single' || question.type === 'multi') {
+optionsHtml = '<div class="space-y-2 mt-2 mb-4">';
+question.options.forEach(option => {
+const optionValue = option.charAt(0);
+const isCorrect = question.type === 'multi'
+? question.answer.includes(optionValue)
+: question.answer === optionValue;
+
+optionsHtml += `
+
+plaintext
+                        &#x3C;div class=&#x22;flex items-start p-2 rounded ${
+                            isCorrect ? &#x27;bg-green-50&#x27; : 
+                            question.userAnswer.includes(optionValue) ? &#x27;bg-red-50&#x27; : &#x27;&#x27;
+                        }&#x22;&#x3E;
+                            &#x3C;span class=&#x22;mr-2 font-medium&#x22;&#x3E;${optionValue}&#x3C;/span&#x3E;
+                            &#x3C;span&#x3E;${option.substring(2)}&#x3C;/span&#x3E;
+                            ${isCorrect ? &#x27;&#x3C;span class=&#x22;ml-2 text-green-600&#x22;&#x3E;&#xFF08;&#x6B63;&#x786E;&#x7B54;&#x6848;&#xFF09;&#x3C;/span&#x3E;&#x27; : &#x27;&#x27;}
+                            ${!isCorrect &#x26;&#x26; question.userAnswer.includes(optionValue) ? &#x27;&#x3C;span class=&#x22;ml-2 text-red-600&#x22;&#x3E;&#xFF08;&#x60A8;&#x7684;&#x7B54;&#x6848;&#xFF09;&#x3C;/span&#x3E;&#x27; : &#x27;&#x27;}
+                        &#x3C;/div&#x3E;
+                    &#x60;;
+                });
+                optionsHtml += &#x27;&#x3C;/div&#x3E;&#x27;;
+
+// 格式化答案文本
+if (question.type === 'multi') {
+answerText = question.answer.map (option => {
+const optionObj = question.options.find (o => o.charAt (0) === option);
+return optionObj ? optionObj.substring (2) : option;
+}).join ('、');
+} else {
+const optionObj = question.options.find (o => o.charAt (0) === question.answer);
+answerText = optionObj ? optionObj.substring (2) : question.answer;
+}
+}
+
+const questionEl = document.createElement('div');
+questionEl.className = 'border-b border-border-color pb-6 last:border-0 last:pb-0';
+questionEl.innerHTML = `
+
+plaintext
+                &#x3C;div class=&#x22;flex items-start&#x22;&#x3E;
+                    &#x3C;span class=&#x22;bg-red-100 text-red-800 font-medium px-3 py-1 rounded-full mr-3 mt-1&#x22;&#x3E;
+                        ${question.type === &#x27;judge&#x27; ? &#x27;&#x5224;&#x65AD;&#x9898;&#x27; : question.type === &#x27;single&#x27; ? &#x27;&#x5355;&#x9009;&#x9898;&#x27; : &#x27;&#x591A;&#x9009;&#x9898;&#x27;}
+                    &#x3C;/span&#x3E;
+                    &#x3C;h4 class=&#x22;text-lg font-semibold&#x22;&#x3E;${index + 1}. ${question.content}&#x3C;/h4&#x3E;
+                &#x3C;/div&#x3E;
+
+${optionsHtml}
+
+plaintext
+                &#x3C;div class=&#x22;mt-3&#x22;&#x3E;
+                    &#x3C;div class=&#x22;flex items-center text-sm mb-1&#x22;&#x3E;
+                        &#x3C;span class=&#x22;text-red-600 mr-2&#x22;&#x3E;&#x60A8;&#x7684;&#x7B54;&#x6848;&#xFF1A;&#x3C;/span&#x3E;
+                        &#x3C;span&#x3E;${question.userAnswer === &#x27;&#x221A;&#x27; ? &#x27;&#x6B63;&#x786E;&#x27; : question.userAnswer === &#x27;&#xD7;&#x27; ? &#x27;&#x9519;&#x8BEF;&#x27; : question.userAnswer}&#x3C;/span&#x3E;
+                    &#x3C;/div&#x3E;
+                    &#x3C;div class=&#x22;flex items-center text-sm mb-2&#x22;&#x3E;
+                        &#x3C;span class=&#x22;text-green-600 mr-2&#x22;&#x3E;&#x6B63;&#x786E;&#x7B54;&#x6848;&#xFF1A;&#x3C;/span&#x3E;
+                        &#x3C;span&#x3E;${answerText}&#x3C;/span&#x3E;
+                    &#x3C;/div&#x3E;
+                    &#x3C;div&#x3E;
+                        &#x3C;span class=&#x22;font-medium mr-2&#x22;&#x3E;&#x89E3;&#x6790;&#xFF1A;&#x3C;/span&#x3E;
+                        &#x3C;span class=&#x22;text-secondary/80&#x22;&#x3E;${question.&#x89E3;&#x6790;}&#x3C;/span&#x3E;
+                    &#x3C;/div&#x3E;
+                &#x3C;/div&#x3E;
+            &#x60;;
+
+wrongQuestionsContainer.appendChild(questionEl);
+});
+}
+
+// 查看所有题目
+reviewAllBtn.addEventListener ('click', () => {
+// 这里可以实现查看所有题目的功能
+alert (' 功能开发中，敬请期待！');
+});
+
+// 保存考试记录
+function saveExamHistory (result) {
+const history = JSON.parse (localStorage.getItem ('examHistory') || '[]');
+
+history.push({
+id: Date.now(),
+score: result.totalScore,
+judgeScore: result.judgeScore,
+singleScore: result.singleScore,
+multiScore: result.multiScore,
+date: result.date.toISOString(),
+questionCount: currentExam.questions.length
+});
+
+// 只保留最近 10 条记录
+if (history.length> 10) {
+history.splice (0, history.length - 10);
+}
+
+localStorage.setItem('examHistory', JSON.stringify(history));
+}
+
+// 显示考试记录
+function showHistory () {
+const history = JSON.parse (localStorage.getItem ('examHistory') || '[]');
+
+if (history.length === 0) {
+historyListEl.classList.add('hidden');
+historyEmptyEl.classList.remove('hidden');
+return;
+}
+
+historyEmptyEl.classList.add('hidden');
+historyListEl.classList.remove('hidden');
+historyListEl.innerHTML = '';
+
+// 按时间倒序排列（最新的在前）
+history.sort ((a, b) => new Date (b.date) - new Date (a.date))
+.forEach (record => {
+const date = new Date (record.date);
+const formattedDate = ${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')};
+
+let scoreClass = '';
+if (record.score >= 90) {
+scoreClass = 'text-green-600';
+} else if (record.score >= 60) {
+scoreClass = 'text-primary';
+} else {
+scoreClass = 'text-red-600';
+}
+
+const recordEl = document.createElement('div');
+recordEl.className = 'border border-border-color rounded-lg p-4 hover:shadow-hover transition-standard';
+recordEl.innerHTML = `
+
+plaintext
+                &#x3C;div class=&#x22;flex flex-wrap justify-between items-start mb-3&#x22;&#x3E;
+                    &#x3C;h4 class=&#x22;font-semibold&#x22;&#x3E;&#x6A21;&#x62DF;&#x8003;&#x8BD5; #${record.id.toString().slice(-4)}&#x3C;/h4&#x3E;
+                    &#x3C;span class=&#x22;text-sm text-secondary/70&#x22;&#x3E;${formattedDate}&#x3C;/span&#x3E;
+                &#x3C;/div&#x3E;
+                &#x3C;div class=&#x22;flex flex-wrap justify-between items-center&#x22;&#x3E;
+                    &#x3C;div class=&#x22;text-2xl font-bold ${scoreClass} mb-2 sm:mb-0&#x22;&#x3E;${record.score}&#x5206;&#x3C;/div&#x3E;
+                    &#x3C;div class=&#x22;grid grid-cols-3 gap-4 w-full sm:w-auto&#x22;&#x3E;
+                        &#x3C;div class=&#x22;text-center&#x22;&#x3E;
+                            &#x3C;div class=&#x22;text-sm text-secondary/70&#x22;&#x3E;&#x5224;&#x65AD;&#x3C;/div&#x3E;
+                            &#x3C;div class=&#x22;font-medium&#x22;&#x3E;${record.judgeScore}/20&#x3C;/div&#x3E;
+                        &#x3C;/div&#x3E;
+                        &#x3C;div class=&#x22;text-center&#x22;&#x3E;
+                            &#x3C;div class=&#x22;text-sm text-secondary/70&#x22;&#x3E;&#x5355;&#x9009;&#x3C;/div&#x3E;
+                            &#x3C;div class=&#x22;font-medium&#x22;&#x3E;${record.singleScore}/60&#x3C;/div&#x3E;
+                        &#x3C;/div&#x3E;
+                        &#x3C;div class=&#x22;text-center&#x22;&#x3E;
+                            &#x3C;div class=&#x22;text-sm text-secondary/70&#x22;&#x3E;&#x591A;&#x9009;&#x3C;/div&#x3E;
+                            &#x3C;div class=&#x22;font-medium&#x22;&#x3E;${record.multiScore}/20&#x3C;/div&#x3E;
+                        &#x3C;/div&#x3E;
+                    &#x3C;/div&#x3E;
+                &#x3C;/div&#x3E;
+            &#x60;;
+
+historyListEl.appendChild(recordEl);
+});
+}
+
+// 初始化页面
+showSection ('home-section');
+</script>
+
+</body>
+</html></script></body></html>
